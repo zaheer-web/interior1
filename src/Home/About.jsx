@@ -148,9 +148,7 @@ export default function About() {
               className="h-[240px] w-full object-cover transition-transform duration-[1200ms] group-hover:scale-110"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-            <div className="absolute bottom-3 left-3 rounded-full bg-black/40 px-3 py-1 text-[11px] font-medium uppercase tracking-wider backdrop-blur-md ring-1 ring-white/20">
-              Interiors
-            </div>
+          
           </motion.div>
 
           {/* Floating badge */}
