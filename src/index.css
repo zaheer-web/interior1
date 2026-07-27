@@ -4,7 +4,7 @@
 }
 
 .custom-pagination .swiper-pagination-bullet-active {
-  background: #2563eb;
+  background: oklch(79.5% 0.184 86.047);
   width: 28px;
   border-radius: 20px;
 }
