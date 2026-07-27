@@ -62,10 +62,7 @@ export default function WhyChoose() {
                 className="h-full w-full object-cover transition-transform duration-[1200ms] group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-              <div className="absolute bottom-4 left-4 flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 backdrop-blur-md ring-1 ring-white/20">
-                <Sparkles size={14} className="text-amber-400" />
-                <span className="text-xs font-medium tracking-wide">Signature Interiors</span>
-              </div>
+             
             </motion.div>
 
             {/* Tall image */}
@@ -83,12 +80,7 @@ export default function WhyChoose() {
                 className="h-full w-full object-cover transition-transform duration-[1200ms] group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-              <div className="absolute bottom-5 left-5 right-5">
-                <p className="text-[11px] uppercase tracking-[0.2em] text-amber-400">Est. 2012</p>
-                <p className="mt-1 text-lg font-semibold leading-tight">
-                  Crafting timeless spaces
-                </p>
-              </div>
+             
             </motion.div>
 
             {/* Stats box */}
