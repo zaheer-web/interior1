@@ -1,8 +1,22 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import { X, Maximize2 } from "lucide-react";
 
-// Yaha apni images import karo (path apne folder structure ke hisab se adjust karo)
+import { Swiper, SwiperSlide } from "swiper/react";
+import {
+  Navigation,
+  Pagination,
+  Keyboard,
+  Zoom,
+  EffectCreative,
+} from "swiper/modules";
+
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/zoom";
+import "swiper/css/effect-creative";
+
 import im1 from "../img/im1.png";
 import im2 from "../img/im10.png";
 import im3 from "../img/im11.png";
@@ -13,120 +27,445 @@ import im6 from "../img/im6.png";
 const images = [im1, im2, im3, im4, im5, im6];
 
 const InteriorGallery = () => {
-
-  const [index,setIndex] = useState(null);
-
-  const next = () => {
-    setIndex((prev)=> (prev + 1) % images.length);
-  };
-
-  const prev = () => {
-    setIndex((prev)=> (prev - 1 + images.length) % images.length);
-  };
+  const [activeIndex, setActiveIndex] = useState(null);
 
   return (
+    <>
+      <section className="relative overflow-hidden bg-black py-20 text-white">
 
-    <section className="py-10 bg-black text-white">
+        {/* ================= BACKGROUND ================= */}
 
-      <div className="max-w-7xl mx-auto px-6">
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.04]"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(255,255,255,.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.6) 1px, transparent 1px)",
+            backgroundSize: "80px 80px",
+          }}
+        />
 
-        <motion.h2
-          initial={{ opacity:0, y:40 }}
-          whileInView={{ opacity:1, y:0 }}
-          transition={{ duration:0.7 }}
-          className="text-4xl font-bold text-center mb-16"
-        >
-          Interior Gallery
-        </motion.h2>
+        {/* GLOW */}
 
-        {/* GRID */}
+        <div className="pointer-events-none absolute -left-40 top-20 h-[500px] w-[500px] rounded-full bg-amber-500/10 blur-[150px]" />
 
-        <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
+        <div className="pointer-events-none absolute -right-40 bottom-0 h-[500px] w-[500px] rounded-full bg-yellow-400/10 blur-[150px]" />
 
-          {images.map((img,i)=>(
+        {/* BACKGROUND TEXT */}
 
-            <motion.div
-              key={i}
-              whileHover={{ scale:1.05 }}
-              className="overflow-hidden rounded-xl shadow-xl cursor-pointer"
-              onClick={()=>setIndex(i)}
-            >
+        <div className="pointer-events-none absolute left-1/2 top-10 -translate-x-1/2 select-none whitespace-nowrap text-[90px] font-black leading-none text-white/[0.025] sm:text-[150px] lg:text-[230px]">
+          GALLERY
+        </div>
 
-              <img
-                src={img}
-                alt=""
-                className="w-full object-cover hover:scale-110 transition duration-700"
-              />
+        <div className="relative mx-auto max-w-7xl px-5 sm:px-6">
 
-            </motion.div>
+          {/* ================= HEADING ================= */}
 
-          ))}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="mb-14 text-center"
+          >
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-amber-400/30 bg-amber-400/10 px-4 py-1.5 text-[10px] font-medium uppercase tracking-[0.3em] text-amber-300">
+              <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+
+              Selected Projects
+            </div>
+
+            <h2 className="text-4xl font-bold sm:text-5xl lg:text-6xl">
+              Interior{" "}
+              <span className="bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-500 bg-clip-text text-transparent">
+                Gallery
+              </span>
+            </h2>
+
+            <p className="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-neutral-400 sm:text-base">
+              Explore a collection of thoughtfully designed interiors where
+              architecture, materials and craftsmanship come together.
+            </p>
+          </motion.div>
+
+          {/* =====================================================
+              MASONRY GALLERY
+          ===================================================== */}
+
+          <div className="columns-1 gap-5 sm:columns-2 lg:columns-3">
+
+            {images.map((img, i) => (
+              <motion.div
+                key={i}
+                initial={{
+                  opacity: 0,
+                  y: 60,
+                }}
+                whileInView={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                viewport={{
+                  once: true,
+                  amount: 0.15,
+                }}
+                transition={{
+                  duration: 0.7,
+                  delay: (i % 3) * 0.1,
+                }}
+                className="mb-5 break-inside-avoid"
+              >
+
+                <div
+                  onClick={() => setActiveIndex(i)}
+                  className="group relative cursor-pointer overflow-hidden rounded-2xl bg-neutral-900 ring-1 ring-white/10"
+                >
+
+                  {/* IMAGE */}
+
+                  <img
+                    src={img}
+                    alt={`Interior project ${i + 1}`}
+                    loading="lazy"
+                    className="
+                      w-full
+                      object-cover
+
+                      transition-transform
+                      duration-[1200ms]
+                      ease-out
+
+                      group-hover:scale-110
+                    "
+                  />
+
+                  {/* DARK OVERLAY */}
+
+                  <div
+                    className="
+                      absolute inset-0
+
+                      bg-gradient-to-t
+                      from-black/80
+                      via-black/10
+                      to-transparent
+
+                      opacity-40
+
+                      transition-opacity
+                      duration-500
+
+                      group-hover:opacity-100
+                    "
+                  />
+
+                  {/* GOLD BORDER */}
+
+                  <div
+                    className="
+                      pointer-events-none
+                      absolute inset-0
+
+                      rounded-2xl
+
+                      border
+                      border-transparent
+
+                      transition-all
+                      duration-500
+
+                      group-hover:border-amber-400/40
+                    "
+                  />
+
+                  {/* TOP NUMBER */}
+
+                  <div
+                    className="
+                      absolute left-4 top-4
+
+                      -translate-y-3
+                      opacity-0
+
+                      transition-all
+                      duration-500
+
+                      group-hover:translate-y-0
+                      group-hover:opacity-100
+                    "
+                  >
+                    <span className="text-[10px] font-medium uppercase tracking-[0.25em] text-white/70">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                  </div>
+
+                  {/* ================= CENTER ICON ================= */}
+
+                  <div
+                    className="
+                      absolute left-1/2 top-1/2
+
+                      flex h-14 w-14
+                      -translate-x-1/2
+                      -translate-y-1/2
+
+                      scale-50
+                      items-center
+                      justify-center
+
+                      rounded-full
+
+                      border border-white/20
+                      bg-black/40
+
+                      opacity-0
+                      backdrop-blur-md
+
+                      transition-all
+                      duration-500
+
+                      group-hover:scale-100
+                      group-hover:opacity-100
+                    "
+                  >
+                    <Maximize2 size={20} />
+                  </div>
+
+                  {/* ================= BOTTOM TEXT ================= */}
+
+                  <div
+                    className="
+                      absolute bottom-0 left-0 right-0
+
+                      translate-y-5
+
+                      p-5
+
+                      opacity-0
+
+                      transition-all
+                      duration-500
+
+                      group-hover:translate-y-0
+                      group-hover:opacity-100
+                    "
+                  >
+                    <p className="text-[9px] uppercase tracking-[0.3em] text-amber-400">
+                      Architecture
+                    </p>
+
+                    <p className="mt-1 text-sm font-medium text-white">
+                      Interior Project {String(i + 1).padStart(2, "0")}
+                    </p>
+                  </div>
+
+                  {/* GOLD LINE */}
+
+                  <div
+                    className="
+                      absolute bottom-0 left-0
+
+                      h-[2px]
+                      w-0
+
+                      bg-gradient-to-r
+                      from-amber-300
+                      to-yellow-600
+
+                      transition-all
+                      duration-700
+
+                      group-hover:w-full
+                    "
+                  />
+
+                </div>
+
+              </motion.div>
+            ))}
+
+          </div>
 
         </div>
 
-      </div>
+      </section>
 
-      {/* LIGHTBOX */}
+      {/* ==========================================================
+          SWIPER FULL SCREEN LIGHTBOX
+      ========================================================== */}
 
       <AnimatePresence>
 
-      {index !== null && (
+        {activeIndex !== null && (
 
-        <motion.div
-          initial={{ opacity:0 }}
-          animate={{ opacity:1 }}
-          exit={{ opacity:0 }}
-          className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center"
-        >
-
-          {/* CLOSE */}
-
-          <button
-            onClick={()=>setIndex(null)}
-            className="absolute top-8 right-8 text-white"
+          <motion.div
+            initial={{
+              opacity: 0,
+            }}
+            animate={{
+              opacity: 1,
+            }}
+            exit={{
+              opacity: 0,
+            }}
+            transition={{
+              duration: 0.3,
+            }}
+            className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/95 backdrop-blur-xl"
           >
-            <X size={32}/>
-          </button>
 
-          {/* LEFT */}
+            {/* ================= CLOSE ================= */}
 
-          <button
-            onClick={prev}
-            className="absolute left-6 text-white"
-          >
-            <ChevronLeft size={40}/>
-          </button>
+            <button
+              onClick={() => setActiveIndex(null)}
+              aria-label="Close gallery"
+              className="
+                absolute right-4 top-4
+                z-[100]
 
-          {/* IMAGE */}
+                flex h-11 w-11
+                items-center
+                justify-center
 
-          <motion.img
-            key={index}
-            src={images[index]}
-            initial={{ scale:0.9, opacity:0 }}
-            animate={{ scale:1, opacity:1 }}
-            transition={{ duration:0.4 }}
-            className="max-h-[80vh] rounded-xl shadow-2xl"
-          />
+                rounded-full
 
-          {/* RIGHT */}
+                border border-white/10
+                bg-white/5
 
-          <button
-            onClick={next}
-            className="absolute right-6 text-white"
-          >
-            <ChevronRight size={40}/>
-          </button>
+                text-white
 
-        </motion.div>
+                backdrop-blur-md
 
-      )}
+                transition-all
+                duration-300
+
+                hover:rotate-90
+                hover:border-amber-400
+                hover:bg-amber-400
+                hover:text-black
+
+                sm:right-8
+                sm:top-8
+              "
+            >
+              <X size={21} />
+            </button>
+
+            {/* ================= SWIPER ================= */}
+
+            <Swiper
+              modules={[
+                Navigation,
+                Pagination,
+                Keyboard,
+                Zoom,
+                EffectCreative,
+              ]}
+
+              initialSlide={activeIndex}
+
+              slidesPerView={1}
+
+              navigation
+
+              keyboard={{
+                enabled: true,
+              }}
+
+              zoom={{
+                maxRatio: 3,
+                minRatio: 1,
+              }}
+
+              pagination={{
+                clickable: true,
+              }}
+
+              effect="creative"
+
+              creativeEffect={{
+                prev: {
+                  shadow: true,
+                  translate: ["-120%", 0, -500],
+                  rotate: [0, 20, 0],
+                },
+
+                next: {
+                  shadow: true,
+                  translate: ["120%", 0, -500],
+                  rotate: [0, -20, 0],
+                },
+              }}
+
+              speed={850}
+
+              className="h-full w-full"
+            >
+
+              {images.map((img, i) => (
+
+                <SwiperSlide key={i}>
+
+                  <div className="flex h-full w-full items-center justify-center px-5 py-20 sm:px-16">
+
+                    {/* ZOOM REQUIRED WRAPPER */}
+
+                    <div className="swiper-zoom-container">
+
+                      <img
+                        src={img}
+                        alt={`Interior project ${i + 1}`}
+                        className="
+                          max-h-[78vh]
+                          max-w-full
+
+                          select-none
+                          rounded-xl
+
+                          object-contain
+
+                          shadow-2xl
+                          shadow-black
+                        "
+                      />
+
+                    </div>
+
+                    {/* ================= IMAGE NUMBER ================= */}
+
+                    <div className="absolute bottom-14 left-1/2 -translate-x-1/2 text-center">
+
+                      <p className="text-[9px] uppercase tracking-[0.35em] text-amber-400">
+                        Project
+                      </p>
+
+                      <p className="mt-1 text-sm text-white/70">
+
+                        {String(i + 1).padStart(2, "0")}
+
+                        <span className="mx-2 text-white/20">
+                          /
+                        </span>
+
+                        {String(images.length).padStart(2, "0")}
+
+                      </p>
+
+                    </div>
+
+                  </div>
+
+                </SwiperSlide>
+
+              ))}
+
+            </Swiper>
+
+          </motion.div>
+
+        )}
 
       </AnimatePresence>
-
-    </section>
-
+    </>
   );
-
 };
 
 export default InteriorGallery;

@@ -7,63 +7,63 @@ import { X, ChevronLeft, ChevronRight } from "lucide-react";
 // ============================================
 
 // Kitchen
-import kitchen1 from "../img/kitchen/ka1.jpeg";
-import kitchen2 from "../img/kitchen/ka2.jpeg";
-import kitchen3 from "../img/kitchen/ka3.jpeg";
-import kitchen4 from "../img/kitchen/ka4.jpeg";
+import kitchen1 from "../img/Interior/ka1.jpeg";
+import kitchen2 from "../img/Interior/ka2.jpeg";
+import kitchen3 from "../img/Interior/ka3.jpeg";
+import kitchen4 from "../img/Interior/ka4.jpeg";
 
 // Bedroom
-import bedroom1 from "../img/bedroom/ba1.jpeg";
-import bedroom2 from "../img/bedroom/ba2.jpeg";
-import bedroom3 from "../img/bedroom/ba3.jpeg";
-import bedroom4 from "../img/bedroom/ba4.jpeg";
+import bedroom1 from "../img/Interior/ba1.jpeg";
+import bedroom2 from "../img/Interior/ba2.jpeg";
+import bedroom3 from "../img/Interior/ba3.jpeg";
+import bedroom4 from "../img/Interior/ba4.jpeg";
 
 // Office
-import office1 from "../img/office/oo1.jpeg";
-import office2 from "../img/office/oo2.jpeg";
-import office3 from "../img/office/oo3.jpeg";
-import office4 from "../img/office/oo4.jpeg";
+import office1 from "../img/Interior/oo1.jpeg";
+import office2 from "../img/Interior/oo2.jpeg";
+import office3 from "../img/Interior/oo3.jpeg";
+import office4 from "../img/Interior/oo4.jpeg";
 
 // Dinning Room
-import dinning1 from "../img/dining room/da1.jpeg";
-import dinning2 from "../img/dining room/da2.jpeg";
+import dinning1 from "../img/Interior/oo4.jpeg";
+import dinning2 from "../img/Interior/oo4.jpeg";
 
 
 // Kids Room
-import kids1 from "../img/kids room/ki1.jpeg";
-import kids2 from "../img/kids room/ki2.jpeg";
-import kids3 from "../img/kids room/ki3.jpeg";
+import kids1 from "../img/Interior/ki1.jpeg";
+import kids2 from "../img/Interior/ki2.jpeg";
+import kids3 from "../img/Interior/ki3.jpeg";
 
 // Living Room
-import living1 from "../img/living room/la1.jpeg";
-import living2 from "../img/living room/la2.jpeg";
-import living3 from "../img/living room/la3.jpeg";
-import living4 from "../img/living room/la4.jpeg";
-import living5 from "../img/living room/la5.jpeg";
+import living1 from "../img/Interior/la1.jpeg";
+import living2 from "../img/Interior/la2.jpeg";
+import living3 from "../img/Interior/la3.jpeg";
+import living4 from "../img/Interior/la4.jpeg";
+import living5 from "../img/Interior/la5.jpeg";
 
 // Drawing Room
-import drawing1 from "../img/drawing room/da1.jpeg";
-import drawing2 from "../img/drawing room/da2.jpeg";
-import drawing3 from "../img/drawing room/da3.jpeg";
-import drawing4 from "../img/drawing room/da4.jpeg";
+import drawing1 from "../img/Interior/oo4.jpeg";
+import drawing2 from "../img/Interior/oo4.jpeg";
+import drawing3 from "../img/Interior/oo4.jpeg";
+import drawing4 from "../img/Interior/oo4.jpeg";
 
 // Double Height Living
-import doubleHeight1 from "../img/double height/dh1.jpeg";
-import doubleHeight2 from "../img/double height/dh2.jpeg";
+import doubleHeight1 from "../img/Interior/dh1.jpeg";
+import doubleHeight2 from "../img/Interior/dh2.jpeg";
 
 // Banquests Hall
-import banquet1 from "../img/banquet hall/bn1.jpeg";
-import banquet2 from "../img/banquet hall/bn2.jpeg";
+import banquet1 from "../img/Interior/bn1.jpeg";
+import banquet2 from "../img/Interior/bn2.jpeg";
 
 
 // Facade
-import facade1 from "../img/building/bu1.jpeg";
-import facade2 from "../img/building/bu2.jpeg";
+import facade1 from "../img/Interior/bu1.jpeg";
+import facade2 from "../img/Interior/bu2.jpeg";
 
 // Bathroom
-import bathroom1 from "../img/bathroom/ba1.jpeg";
-import bathroom2 from "../img/bathroom/ba2.jpeg";
-import bathroom3 from "../img/bathroom/ba3.jpeg";
+import bathroom1 from "../img/Interior/ba1.jpeg";
+import bathroom2 from "../img/Interior/ba2.jpeg";
+import bathroom3 from "../img/Interior/ba3.jpeg";
 
 const categories = [
   "All",

@@ -22,6 +22,13 @@ import Dashboard from "../src/adminDeshboard/Dashboard";
 /* TOAST */
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Interior from "./pages/Interior";
+import Architectural from "./pages/Architectural";
+import Visualization from "./pages/Visualization";
+import Landscape from "./pages/Landscape";
+import Urban from "./pages/Urban";
+import ProjectManagment from "./pages/ProjectManagment";
+
 
 function App() {
 
@@ -40,6 +47,18 @@ function App() {
         <Route path="/services" element={<Services />} />
         <Route path="/about" element={<About1 />} />
         <Route path="/gallery" element={<Gallery />} />
+        <Route path="/interior-design" element={<Interior/>} />
+        <Route path="/architectural-design" element={<Architectural/>} />
+        <Route path="/3d-visualization" element={<Visualization/>} />
+        <Route path="/landscape-design" element={<Landscape/>} />
+        <Route path="/urban-planning" element={<Urban/>} />
+        <Route path="/project-management" element={<ProjectManagment/>} />
+
+
+
+
+
+
         <Route path="/contact" element={<Contact />} />
         <Route path="/contact-form" element={<ContactForm />} />
         <Route path="/gallery-grid" element={<GallerySection />} />

@@ -20,7 +20,7 @@ function Home() {
        <OurService/>
        <OurClient/>
        <After/>
-       <Process/>
+       {/* <Process/> */}
        <Consultant/>
     </div>
   )

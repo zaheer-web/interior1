@@ -6,9 +6,10 @@ import ParallaxSection from '../Home/ParallaxSection'
 export default function After() {
   return (
     <>
-      <BeforeAfter/>
-      <InteriorGallery/>
       <ParallaxSection/>
+      <InteriorGallery/>
+
+      <BeforeAfter/>
     </>
   )
 }

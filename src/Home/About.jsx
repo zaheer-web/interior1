@@ -1,13 +1,181 @@
-import { motion } from "framer-motion";
-import { Phone, ArrowUpRight, Award, Users } from "lucide-react";
+import { useEffect, useRef } from "react";
+import { Award, Users } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
 import img1 from "../img/im11.png";
 import img2 from "../img/im12.png";
 import img3 from "../img/im13.png";
 
+gsap.registerPlugin(ScrollTrigger);
+
 export default function About() {
+  const sectionRef = useRef(null);
+  const contentRef = useRef(null);
+  const imagesRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // ===============================
+      // LEFT CONTENT STAGGER
+      // ===============================
+      gsap.from(".about-reveal", {
+        scrollTrigger: {
+          trigger: contentRef.current,
+          start: "top 80%",
+        },
+        y: 55,
+        opacity: 0,
+        duration: 0.9,
+        stagger: 0.12,
+        ease: "power3.out",
+      });
+
+      // ===============================
+      // MAIN IMAGE REVEAL
+      // ===============================
+      gsap.fromTo(
+        ".main-image-wrap",
+        {
+          clipPath: "inset(0 100% 0 0)",
+        },
+        {
+          clipPath: "inset(0 0% 0 0)",
+          duration: 1.4,
+          ease: "power4.inOut",
+          scrollTrigger: {
+            trigger: imagesRef.current,
+            start: "top 78%",
+          },
+        }
+      );
+
+      // Main image subtle zoom
+      gsap.fromTo(
+        ".main-image",
+        {
+          scale: 1.25,
+        },
+        {
+          scale: 1,
+          duration: 1.7,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: imagesRef.current,
+            start: "top 78%",
+          },
+        }
+      );
+
+      // ===============================
+      // SMALL IMAGE 1
+      // ===============================
+      gsap.from(".small-image-left", {
+        scrollTrigger: {
+          trigger: imagesRef.current,
+          start: "top 72%",
+        },
+        x: -80,
+        y: 60,
+        opacity: 0,
+        rotate: -5,
+        duration: 1,
+        ease: "power3.out",
+      });
+
+      // ===============================
+      // SMALL IMAGE 2
+      // ===============================
+      gsap.from(".small-image-right", {
+        scrollTrigger: {
+          trigger: imagesRef.current,
+          start: "top 72%",
+        },
+        x: 80,
+        y: 60,
+        opacity: 0,
+        rotate: 5,
+        duration: 1,
+        ease: "power3.out",
+      });
+
+      // ===============================
+      // PARALLAX IMAGES
+      // ===============================
+      gsap.to(".parallax-main", {
+        yPercent: 12,
+        ease: "none",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1.2,
+        },
+      });
+
+      gsap.to(".parallax-left", {
+        yPercent: -12,
+        ease: "none",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1.4,
+        },
+      });
+
+      gsap.to(".parallax-right", {
+        yPercent: 16,
+        ease: "none",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1.6,
+        },
+      });
+
+      // ===============================
+      // BACKGROUND 01 PARALLAX
+      // ===============================
+      gsap.to(".background-number", {
+        y: 100,
+        opacity: 0.08,
+        ease: "none",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1,
+        },
+      });
+
+      // ===============================
+      // PROJECT BADGE
+      // ===============================
+      gsap.from(".project-badge", {
+        scrollTrigger: {
+          trigger: imagesRef.current,
+          start: "top 65%",
+        },
+        scale: 0,
+        rotate: -20,
+        opacity: 0,
+        duration: 0.8,
+        ease: "back.out(1.7)",
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-black via-neutral-950 to-black py-24 text-white">
-      {/* Grid overlay */}
+    <section
+      ref={sectionRef}
+      className="relative overflow-hidden bg-gradient-to-b from-black via-neutral-950 to-black py-20 text-white sm:py-24 lg:py-32"
+    >
+      {/* ================= BACKGROUND GRID ================= */}
+
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.05]"
         style={{
@@ -17,157 +185,229 @@ export default function About() {
         }}
       />
 
-      {/* Ambient glows */}
-      <div className="pointer-events-none absolute -top-32 -left-32 h-[500px] w-[500px] rounded-full bg-amber-500/20 blur-[160px]" />
+      {/* ================= GLOWS ================= */}
+
+      <div className="pointer-events-none absolute -left-32 -top-32 h-[500px] w-[500px] rounded-full bg-amber-500/20 blur-[160px]" />
+
       <div className="pointer-events-none absolute -bottom-32 -right-32 h-[500px] w-[500px] rounded-full bg-yellow-400/15 blur-[160px]" />
 
-      {/* Giant background number */}
-      <div className="pointer-events-none absolute left-4 top-8 select-none text-[220px] font-black leading-none text-white/[0.04] md:text-[340px]">
+      {/* ================= 01 ================= */}
+
+      <div className="background-number pointer-events-none absolute left-4 top-8 select-none text-[180px] font-black leading-none text-white/[0.04] sm:text-[220px] md:text-[340px]">
         01
       </div>
 
+      {/* ================= MAIN ================= */}
+
       <div className="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-16 px-6 lg:grid-cols-2 lg:gap-20">
-        {/* LEFT CONTENT */}
-        <motion.div
-          initial={{ opacity: 0, x: -60 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-        >
-          <div className="inline-flex items-center gap-2 rounded-full border border-amber-400/30 bg-amber-400/10 px-4 py-1.5 text-xs font-medium uppercase tracking-[0.2em] text-amber-300">
+
+        {/* ==================================================
+            LEFT
+        ================================================== */}
+
+        <div ref={contentRef}>
+          {/* LABEL */}
+
+          <div className="about-reveal inline-flex items-center gap-2 rounded-full border border-amber-400/30 bg-amber-400/10 px-4 py-1.5 text-xs font-medium uppercase tracking-[0.2em] text-amber-300">
             <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+
             About the Studio
           </div>
 
-          <h2 className="mt-6 text-4xl font-extrabold leading-[1.05] tracking-tight md:text-6xl">
+          {/* HEADING */}
+
+          <h2 className="about-reveal mt-6 text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-5xl md:text-6xl">
             <span className="bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-500 bg-clip-text text-transparent">
               Company
             </span>
+
             <br />
-            <span className="text-white">Overview</span>
+
+            <span className="text-white">
+              Overview
+            </span>
           </h2>
 
-          <div className="mt-6 flex items-center gap-4">
-            <div className="h-px w-10 bg-amber-400" />
-            <p className="text-lg font-medium italic text-amber-300">
+          {/* QUOTE */}
+
+          <div className="about-reveal mt-6 flex items-start gap-4 sm:items-center">
+            <div className="mt-3 h-px w-10 shrink-0 bg-amber-400 sm:mt-0" />
+
+            <p className="text-base font-medium italic text-amber-300 sm:text-lg">
               Architecture should speak of its time and place.
             </p>
           </div>
 
-          <p className="mt-6 max-w-xl text-base leading-relaxed text-neutral-400">
-            M.A. Architects & Associates is a Moradabad-based architectural firm with over
-            10 years of experience in architecture, master planning, urbanism, landscape and
-            interior design. We provide complete design solutions from concept to execution.
+          {/* PARAGRAPH */}
+
+          <p className="about-reveal mt-6 max-w-xl text-base leading-relaxed text-neutral-400">
+            M.A. Architects & Associates is a Moradabad-based architectural
+            firm with over 10 years of experience in architecture, master
+            planning, urbanism, landscape and interior design. We provide
+            complete design solutions from concept to execution.
           </p>
 
-          <p className="mt-4 max-w-xl text-base leading-relaxed text-neutral-400">
-            Our approach combines functionality with aesthetics — every project is thoughtfully
-            designed and carefully executed alongside clients and consultants to deliver spaces
-            that exceed expectations.
+          <p className="about-reveal mt-4 max-w-xl text-base leading-relaxed text-neutral-400">
+            Our approach combines functionality with aesthetics — every project
+            is thoughtfully designed and carefully executed alongside clients
+            and consultants to deliver spaces that exceed expectations.
           </p>
 
-          {/* Mini stats */}
-          <div className="mt-10 grid grid-cols-2 gap-4 sm:max-w-md">
-            <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 backdrop-blur-sm transition-colors hover:border-amber-400/30">
-              <Award className="text-amber-400" size={22} />
-              <p className="mt-3 text-2xl font-bold">10+ Yrs</p>
-              <p className="text-xs uppercase tracking-wider text-neutral-500">Experience</p>
+          {/* ================= STATS ================= */}
+
+          <div className="about-reveal mt-10 grid grid-cols-2 gap-3 sm:max-w-md sm:gap-4">
+
+            <div className="group rounded-2xl border border-white/10 bg-white/[0.03] p-4 backdrop-blur-sm transition-all duration-500 hover:-translate-y-1 hover:border-amber-400/40 hover:bg-amber-400/[0.04]">
+
+              <Award
+                className="text-amber-400 transition-transform duration-500 group-hover:rotate-12 group-hover:scale-110"
+                size={22}
+              />
+
+              <p className="mt-3 text-xl font-bold sm:text-2xl">
+                10+ Yrs
+              </p>
+
+              <p className="text-[10px] uppercase tracking-wider text-neutral-500 sm:text-xs">
+                Experience
+              </p>
+
             </div>
-            <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 backdrop-blur-sm transition-colors hover:border-amber-400/30">
-              <Users className="text-amber-400" size={22} />
-              <p className="mt-3 text-2xl font-bold">500+</p>
-              <p className="text-xs uppercase tracking-wider text-neutral-500">Happy Clients</p>
+
+            <div className="group rounded-2xl border border-white/10 bg-white/[0.03] p-4 backdrop-blur-sm transition-all duration-500 hover:-translate-y-1 hover:border-amber-400/40 hover:bg-amber-400/[0.04]">
+
+              <Users
+                className="text-amber-400 transition-transform duration-500 group-hover:scale-110"
+                size={22}
+              />
+
+              <p className="mt-3 text-xl font-bold sm:text-2xl">
+                500+
+              </p>
+
+              <p className="text-[10px] uppercase tracking-wider text-neutral-500 sm:text-xs">
+                Happy Clients
+              </p>
+
             </div>
+
+          </div>
+        </div>
+
+        {/* ==================================================
+            RIGHT IMAGE COMPOSITION
+        ================================================== */}
+
+        <div
+          ref={imagesRef}
+          className="relative grid grid-cols-2 gap-3 sm:gap-5"
+        >
+
+          {/* ================= MAIN IMAGE ================= */}
+
+          <div className="main-image-wrap group relative col-span-2 overflow-hidden rounded-3xl shadow-2xl shadow-amber-500/10 ring-1 ring-white/10">
+
+            <div className="parallax-main h-[290px] w-full sm:h-[340px]">
+
+              <img
+                src={img1}
+                alt="Architectural project"
+                loading="lazy"
+                className="main-image h-[120%] w-full -translate-y-[8%] object-cover transition-transform duration-1000 group-hover:scale-[1.04]"
+              />
+
+            </div>
+
+            {/* OVERLAY */}
+
+            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent" />
+
+            {/* GOLD LINE */}
+
+            <div className="absolute left-0 top-0 h-1 w-0 bg-gradient-to-r from-amber-300 to-yellow-500 transition-all duration-700 group-hover:w-full" />
+
+            {/* CONTENT */}
+
+            <div className="absolute bottom-5 left-5 right-5">
+
+              <p className="text-[10px] uppercase tracking-[0.3em] text-amber-400 sm:text-[11px]">
+                Featured Work
+              </p>
+
+              <p className="mt-1 max-w-md text-lg font-semibold leading-tight sm:text-xl">
+                Modern residential masterpiece
+              </p>
+
+            </div>
+
           </div>
 
-         
-        </motion.div>
+          {/* ================= IMAGE 2 ================= */}
 
-        {/* IMAGE GRID */}
-        <div className="relative grid grid-cols-2 gap-5">
-          {/* Wide image */}
-          <motion.div
-            initial={{ opacity: 0, y: 60 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="group relative col-span-2 overflow-hidden rounded-3xl shadow-2xl shadow-amber-500/10 ring-1 ring-white/10"
-          >
-            <img
-              src={img1}
-              alt="Architectural project"
-              loading="lazy"
-              className="h-[300px] w-full object-cover transition-transform duration-[1200ms] group-hover:scale-110"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-            <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between">
-              <div>
-                <p className="text-[11px] uppercase tracking-[0.25em] text-amber-400">
-                  Featured Work
-                </p>
-                <p className="mt-1 text-xl font-semibold leading-tight">
-                  Modern residential masterpiece
-                </p>
-              </div>
-              
+          <div className="small-image-left group relative overflow-hidden rounded-2xl shadow-2xl shadow-amber-500/10 ring-1 ring-white/10 sm:rounded-3xl">
+
+            <div className="h-[190px] overflow-hidden sm:h-[240px]">
+
+              <img
+                src={img2}
+                alt="Design studio"
+                loading="lazy"
+                className="parallax-left h-[125%] w-full -translate-y-[10%] object-cover transition-transform duration-1000 group-hover:scale-110"
+              />
+
             </div>
-          </motion.div>
 
-          {/* Image 2 */}
-          <motion.div
-            initial={{ opacity: 0, y: 60 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.1 }}
-            className="group relative overflow-hidden rounded-3xl shadow-2xl shadow-amber-500/10 ring-1 ring-white/10"
-          >
-            <img
-              src={img2}
-              alt="Design studio"
-              loading="lazy"
-              className="h-[240px] w-full object-cover transition-transform duration-[1200ms] group-hover:scale-110"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-            <div className="absolute bottom-3 left-3 rounded-full bg-black/40 px-3 py-1 text-[11px] font-medium uppercase tracking-wider backdrop-blur-md ring-1 ring-white/20">
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+
+            <div className="absolute bottom-3 left-3 rounded-full border border-white/10 bg-black/50 px-3 py-1 text-[9px] font-medium uppercase tracking-wider backdrop-blur-md sm:text-[11px]">
               Studio
             </div>
-          </motion.div>
 
-          {/* Image 3 */}
-          <motion.div
-            initial={{ opacity: 0, y: 60 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="group relative overflow-hidden rounded-3xl shadow-2xl shadow-amber-500/10 ring-1 ring-white/10"
-          >
-            <img
-              src={img3}
-              alt="Interior detail"
-              loading="lazy"
-              className="h-[240px] w-full object-cover transition-transform duration-[1200ms] group-hover:scale-110"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-          
-          </motion.div>
+          </div>
 
-          {/* Floating badge */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="absolute -bottom-6 -left-6 hidden rounded-2xl bg-gradient-to-br from-amber-300 to-amber-600 p-5 shadow-2xl shadow-amber-500/40 ring-1 ring-amber-200/60 sm:block"
-          >
-            <p className="text-3xl font-black text-black">150+</p>
+          {/* ================= IMAGE 3 ================= */}
+
+          <div className="small-image-right group relative overflow-hidden rounded-2xl shadow-2xl shadow-amber-500/10 ring-1 ring-white/10 sm:rounded-3xl">
+
+            <div className="h-[190px] overflow-hidden sm:h-[240px]">
+
+              <img
+                src={img3}
+                alt="Interior detail"
+                loading="lazy"
+                className="parallax-right h-[125%] w-full -translate-y-[10%] object-cover transition-transform duration-1000 group-hover:scale-110"
+              />
+
+            </div>
+
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+
+            <div className="absolute bottom-3 left-3 rounded-full border border-white/10 bg-black/50 px-3 py-1 text-[9px] font-medium uppercase tracking-wider backdrop-blur-md sm:text-[11px]">
+              Interior
+            </div>
+
+          </div>
+
+          {/* ================= PROJECT BADGE ================= */}
+
+          <div className="project-badge absolute -bottom-6 -left-4 z-20 hidden rounded-2xl bg-gradient-to-br from-amber-300 to-amber-600 p-5 shadow-2xl shadow-amber-500/30 ring-1 ring-amber-200/60 sm:block">
+
+            <p className="text-3xl font-black text-black">
+              150+
+            </p>
+
             <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-black/70">
               Projects
               <br />
               Delivered
             </p>
-          </motion.div>
+
+          </div>
+
         </div>
+
       </div>
+
     </section>
   );
 }
