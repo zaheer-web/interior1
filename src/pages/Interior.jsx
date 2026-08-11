@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
 // Apni images yaha import karo — jitni chahiye utni add kar lo
-import n44 from "../img/interior/ba1.jpeg";
+import n44 from "../img/interior/ba2.jpeg";
 import n38 from "../img/interior/ba3.jpeg";
 import ba1 from "../img/Interior/dh1.jpeg";
 import n31 from "../img/interior/dh2.jpeg";
