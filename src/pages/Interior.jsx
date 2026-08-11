@@ -7,10 +7,10 @@ import { X, ChevronLeft, ChevronRight } from "lucide-react";
 // ============================================
 
 // Kitchen
-import kitchen1 from "../img/kitchen/ka1.jpeg";
-import kitchen2 from "../img/kitchen/ka2.jpeg";
-import kitchen3 from "../img/kitchen/ka3.jpeg";
-import kitchen4 from "../img/kitchen/ka4.jpeg";
+import kitchen1 from "../img/Kitchen/ka1.jpeg";
+import kitchen2 from "../img/Kitchen/ka2.jpeg";
+import kitchen3 from "../img/Kitchen/ka3.jpeg";
+import kitchen4 from "../img/Kitchen/ka4.jpeg";
 
 // Bedroom
 import bedroom1 from "../img/bedroom/ba1.jpeg";
