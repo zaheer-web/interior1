@@ -3,16 +3,16 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
 // Apni images yaha import karo — jitni chahiye utni add kar lo
-import n44 from "../img/interior/ba1.jpeg";
-import n38 from "../img/interior/ba3.jpeg";
+import n44 from "../img/Interior/ba1.jpeg";
+import n38 from "../img/Interior/ba3.jpeg";
 import ba1 from "../img/Interior/dh1.jpeg";
-import n31 from "../img/interior/dh2.jpeg";
-import n23 from "../img/interior/ka1.jpeg";
-import n35 from "../img/interior/ka2.jpeg";
-import n24 from "../img/interior/ki1.jpeg";
-import n25 from "../img/interior/ki2.jpeg";
-import n26 from "../img/interior/la2.jpeg";
-import n27 from "../img/interior/la3.jpeg";
+import n31 from "../img/Interior/dh2.jpeg";
+import n23 from "../img/Interior/ka1.jpeg";
+import n35 from "../img/Interior/ka2.jpeg";
+import n24 from "../img/Interior/ki1.jpeg";
+import n25 from "../img/Interior/ki2.jpeg";
+import n26 from "../img/Interior/la2.jpeg";
+import n27 from "../img/Interior/la3.jpeg";
 
 const portfolioImages = [n44, n38, ba1, n31, n23, n35,n24,n25,n26,n27];
 
