@@ -1,163 +1,264 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
-// Apni images yaha import karo — jitni chahiye utni add kar lo
-import n44 from "../img/Interior/ba1.jpeg";
-import n38 from "../img/Interior/ba3.jpeg";
-import ba1 from "../img/Interior/dh1.jpeg";
-import n31 from "../img/Interior/dh2.jpeg";
-import n23 from "../img/Interior/ka1.jpeg";
-import n35 from "../img/Interior/ka2.jpeg";
-import n24 from "../img/Interior/ki1.jpeg";
-import n25 from "../img/Interior/ki2.jpeg";
-import n26 from "../img/Interior/la2.jpeg";
-import n27 from "../img/Interior/la3.jpeg";
+// ============================================
+// IMAGES — path se import karo (URL nahi)
+// ============================================
 
-const portfolioImages = [n44, n38, ba1, n31, n23, n35,n24,n25,n26,n27];
+// Kitchen
+import kitchen1 from "../img/kitchen/ka1.jpeg";
+import kitchen2 from "../img/kitchen/ka2.jpeg";
+import kitchen3 from "../img/kitchen/ka3.jpeg";
+import kitchen4 from "../img/kitchen/ka4.jpeg";
 
-export default function Interior() {
-  const [selectedIndex, setSelectedIndex] = useState(null);
+// Bedroom
+import bedroom1 from "../img/bedroom/ba1.jpeg";
+import bedroom2 from "../img/bedroom/ba2.jpeg";
+import bedroom3 from "../img/bedroom/ba3.jpeg";
+import bedroom4 from "../img/bedroom/ba4.jpeg";
 
-  const isOpen = selectedIndex !== null;
+// Office
+import office1 from "../img/office/oo1.jpeg";
+import office2 from "../img/office/oo2.jpeg";
+import office3 from "../img/office/oo3.jpeg";
+import office4 from "../img/office/oo4.jpeg";
 
-  const showPrev = useCallback(() => {
-    setSelectedIndex((prev) =>
-      prev === 0 ? portfolioImages.length - 1 : prev - 1
-    );
-  }, []);
+// Dinning Room
+import dinning1 from "../img/dining room/da1.jpeg";
+import dinning2 from "../img/dining room/da2.jpeg";
 
-  const showNext = useCallback(() => {
-    setSelectedIndex((prev) =>
-      prev === portfolioImages.length - 1 ? 0 : prev + 1
-    );
-  }, []);
 
-  const closeLightbox = () => setSelectedIndex(null);
+// Kids Room
+import kids1 from "../img/kids room/ki1.jpeg";
+import kids2 from "../img/kids room/ki2.jpeg";
+import kids3 from "../img/kids room/ki3.jpeg";
 
-  // Keyboard navigation
-  useEffect(() => {
-    if (!isOpen) return;
+// Living Room
+import living1 from "../img/living room/la1.jpeg";
+import living2 from "../img/living room/la2.jpeg";
+import living3 from "../img/living room/la3.jpeg";
+import living4 from "../img/living room/la4.jpeg";
+import living5 from "../img/living room/la5.jpeg";
 
-    const handleKeyDown = (e) => {
-      if (e.key === "ArrowLeft") showPrev();
-      else if (e.key === "ArrowRight") showNext();
-      else if (e.key === "Escape") closeLightbox();
-    };
+// Drawing Room
+import drawing1 from "../img/drawing room/da1.jpeg";
+import drawing2 from "../img/drawing room/da2.jpeg";
+import drawing3 from "../img/drawing room/da3.jpeg";
+import drawing4 from "../img/drawing room/da4.jpeg";
 
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, showPrev, showNext]);
+// Double Height Living
+import doubleHeight1 from "../img/double height/dh1.jpeg";
+import doubleHeight2 from "../img/double height/dh2.jpeg";
+
+// Banquests Hall
+import banquet1 from "../img/banquet hall/bn1.jpeg";
+import banquet2 from "../img/banquet hall/bn2.jpeg";
+
+
+
+
+
+const categories = [
+  "All",
+  "Kitchen",
+  "Bedroom",
+  "Office",
+  "Dinning Room",
+  "Kids Room",
+  "Living Room",
+  "Drawing Room",
+  "Double Height Living",
+  "Banquests Hall",
+ 
+  
+];
+
+// Har category ke liye images yaha map ki gayi hain.
+// Category name EXACT match hona chahiye upar wali list se.
+const images = [
+  // Kitchen
+  { src: kitchen1, category: "Kitchen" },
+  { src: kitchen2, category: "Kitchen" },
+  { src: kitchen3, category: "Kitchen" },
+  { src: kitchen4, category: "Kitchen" },
+
+  // Bedroom
+  { src: bedroom1, category: "Bedroom" },
+  { src: bedroom2, category: "Bedroom" },
+  { src: bedroom3, category: "Bedroom" },
+  { src: bedroom4, category: "Bedroom" },
+
+  // Office
+  { src: office1, category: "Office" },
+  { src: office2, category: "Office" },
+  { src: office3, category: "Office" },
+  { src: office4, category: "Office" },
+
+  // Dinning Room
+  { src: dinning1, category: "Dinning Room" },
+  { src: dinning2, category: "Dinning Room" },
+ 
+
+  // Kids Room
+  { src: kids1, category: "Kids Room" },
+  { src: kids2, category: "Kids Room" },
+  { src: kids3, category: "Kids Room" },
+
+  // Living Room
+  { src: living1, category: "Living Room" },
+  { src: living2, category: "Living Room" },
+  { src: living3, category: "Living Room" },
+  { src: living4, category: "Living Room" },
+  { src: living5, category: "Living Room" },
+
+  // Drawing Room
+  { src: drawing1, category: "Drawing Room" },
+  { src: drawing2, category: "Drawing Room" },
+  { src: drawing3, category: "Drawing Room" },
+  { src: drawing4, category: "Drawing Room" },
+
+  // Double Height Living
+  { src: doubleHeight1, category: "Double Height Living" },
+  { src: doubleHeight2, category: "Double Height Living" },
+
+  // Banquests Hall
+  { src: banquet1, category: "Banquests Hall" },
+  { src: banquet2, category: "Banquests Hall" },
+
+
+ 
+];
+
+const Interior = () => {
+  const [category, setCategory] = useState("All");
+  const [index, setIndex] = useState(null);
+
+  const filteredImages =
+    category === "All"
+      ? images
+      : images.filter((img) => img.category === category);
+
+  const next = () => {
+    setIndex((prev) => (prev + 1) % filteredImages.length);
+  };
+
+  const prev = () => {
+    setIndex((prev) => (prev - 1 + filteredImages.length) % filteredImages.length);
+  };
 
   return (
-    <section className="relative py-16 sm:py-20 bg-black text-white overflow-hidden min-h-screen">
+    <section className="relative py-24 bg-black text-white overflow-hidden">
+      {/* scrollbar-hide utility (Tailwind me by-default nahi hota) */}
+      <style>{`
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+      `}</style>
 
-      {/* Glow Background */}
-      <div className="absolute -top-20 -left-20 w-72 h-72 sm:w-96 sm:h-96 bg-yellow-500/20 blur-[100px] sm:blur-[140px] rounded-full"></div>
-      <div className="absolute bottom-0 right-0 w-72 h-72 sm:w-96 sm:h-96 bg-yellow-400/20 blur-[100px] sm:blur-[140px] rounded-full"></div>
+      {/* Glow background */}
+      <div className="absolute -top-20 -left-20 w-96 h-96 bg-yellow-500/20 blur-[140px] rounded-full"></div>
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-yellow-400/20 blur-[140px] rounded-full"></div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
+      <div className="relative max-w-7xl mx-auto px-6">
+        {/* FILTER */}
+        <div className="mb-16 text-center">
+        
 
-        {/* Heading */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          className="text-center mb-10 sm:mb-14"
-        >
-          
-        </motion.div>
+          <div className="relative">
+            {/* Left/right fade to hint scrollability on mobile */}
+            <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-10 bg-gradient-to-r from-black to-transparent z-10 md:hidden" />
+            <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-10 bg-gradient-to-l from-black to-transparent z-10 md:hidden" />
 
-        {/* Portfolio Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-          {portfolioImages.map((img, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: index * 0.05 }}
-              whileHover={{ y: -6 }}
-              onClick={() => setSelectedIndex(index)}
-              className="group relative rounded-2xl overflow-hidden border border-white/10 hover:border-yellow-500 transition cursor-pointer"
-            >
-              <img
-                src={img}
-                alt={`Portfolio ${index + 1}`}
-                className="w-full h-52 sm:h-64 object-cover group-hover:scale-110 transition duration-500"
-              />
-            </motion.div>
-          ))}
+            <div className="mt-5 flex md:flex-wrap md:justify-center gap-3 overflow-x-auto md:overflow-visible scrollbar-hide px-6 md:px-0 py-1 snap-x snap-mandatory">
+              {categories.map((item, i) => {
+                const isActive = category === item;
+                return (
+                  <button
+                    key={i}
+                    onClick={() => {
+                      setCategory(item);
+                      setIndex(null); // category change pe lightbox reset
+                    }}
+                    className={`relative flex-shrink-0 snap-start px-5 py-2.5 rounded-full text-sm font-medium transition-colors duration-300
+                    ${isActive ? "text-black" : "text-gray-300 hover:text-yellow-400"}`}
+                  >
+                    {isActive && (
+                      <motion.span
+                        layoutId="active-category-pill"
+                        transition={{ type: "spring", stiffness: 400, damping: 32 }}
+                        className="absolute inset-0 rounded-full bg-yellow-400 shadow-[0_0_20px_rgba(250,204,21,0.4)]"
+                      />
+                    )}
+                    <span className="relative z-10 whitespace-nowrap">{item}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
         </div>
 
+        {/* GALLERY GRID */}
+        {filteredImages.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            {filteredImages.map((item, i) => (
+              <motion.div
+                key={i}
+                whileHover={{ scale: 1.05 }}
+                onClick={() => setIndex(i)}
+                className="rounded-2xl overflow-hidden border border-white/10 bg-white/5 cursor-pointer group"
+              >
+                <img
+                  src={item.src}
+                  className="w-full h-[260px] object-cover group-hover:scale-110 transition duration-700"
+                  alt={item.category}
+                />
+              </motion.div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-center text-gray-400">Is category me abhi koi image nahi hai.</p>
+        )}
       </div>
 
-      {/* Lightbox Slider */}
+      {/* LIGHTBOX */}
       <AnimatePresence>
-        {isOpen && (
+        {index !== null && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={closeLightbox}
-            className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4 sm:p-6"
+            className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center"
           >
-            {/* Close Button */}
-            <button
-              onClick={closeLightbox}
-              className="absolute top-4 right-4 sm:top-6 sm:right-6 text-white hover:text-yellow-500 transition z-10"
-            >
-              <X size={28} className="sm:hidden" />
-              <X size={32} className="hidden sm:block" />
+            {/* CLOSE */}
+            <button onClick={() => setIndex(null)} className="absolute top-8 right-8 text-white">
+              <X size={32} />
             </button>
 
-            {/* Prev Arrow */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                showPrev();
-              }}
-              className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 text-white hover:text-yellow-500 transition z-10 bg-white/10 hover:bg-white/20 rounded-full p-2 sm:p-3"
-            >
-              <ChevronLeft size={22} className="sm:hidden" />
-              <ChevronLeft size={32} className="hidden sm:block" />
+            {/* LEFT */}
+            <button onClick={prev} className="absolute left-6 text-white">
+              <ChevronLeft size={40} />
             </button>
 
-            {/* Next Arrow */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                showNext();
-              }}
-              className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 text-white hover:text-yellow-500 transition z-10 bg-white/10 hover:bg-white/20 rounded-full p-2 sm:p-3"
-            >
-              <ChevronRight size={22} className="sm:hidden" />
-              <ChevronRight size={32} className="hidden sm:block" />
+            {/* IMAGE */}
+            <motion.img
+              key={index}
+              src={filteredImages[index].src}
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.4 }}
+              className="max-h-[80vh] rounded-xl shadow-2xl"
+              alt={filteredImages[index].category}
+            />
+
+            {/* RIGHT */}
+            <button onClick={next} className="absolute right-6 text-white">
+              <ChevronRight size={40} />
             </button>
-
-            {/* Image */}
-            <AnimatePresence mode="wait">
-              <motion.img
-                key={selectedIndex}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.25 }}
-                src={portfolioImages[selectedIndex]}
-                alt={`Portfolio ${selectedIndex + 1}`}
-                onClick={(e) => e.stopPropagation()}
-                className="max-h-[75vh] sm:max-h-[85vh] max-w-[90%] sm:max-w-[80%] rounded-xl object-contain"
-              />
-            </AnimatePresence>
-
-            {/* Counter */}
-            <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 text-gray-300 text-xs sm:text-sm bg-white/10 px-3 py-1 rounded-full">
-              {selectedIndex + 1} / {portfolioImages.length}
-            </div>
-
           </motion.div>
         )}
       </AnimatePresence>
-
     </section>
   );
-}
+};
+
+export default Interior;

@@ -4,7 +4,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 
 import img1 from "../img/im14.png";
-import img2 from "../img/im15.png";
+import img2 from "../img/architecture/n41.jpeg";
 
 const points = [
   {
