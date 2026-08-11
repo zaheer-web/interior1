@@ -248,13 +248,6 @@ const InteriorGallery = () => {
                       group-hover:opacity-100
                     "
                   >
-                    <p className="text-[9px] uppercase tracking-[0.3em] text-amber-400">
-                      Architecture
-                    </p>
-
-                    <p className="mt-1 text-sm font-medium text-white">
-                      Interior Project {String(i + 1).padStart(2, "0")}
-                    </p>
                   </div>
 
                   {/* GOLD LINE */}

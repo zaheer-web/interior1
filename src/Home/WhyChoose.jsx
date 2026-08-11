@@ -102,9 +102,7 @@ export default function WhyChoose() {
 
               <div className="absolute bottom-4 left-4">
 
-                <span className="rounded-full border border-white/10 bg-black/40 px-3 py-1 text-[9px] uppercase tracking-[0.2em] text-white/80 backdrop-blur-md sm:text-[10px]">
-                  Interior
-                </span>
+               
 
               </div>
 
@@ -136,13 +134,9 @@ export default function WhyChoose() {
 
               <div className="absolute bottom-5 left-5">
 
-                <p className="text-[9px] uppercase tracking-[0.25em] text-amber-400 sm:text-[10px]">
-                  Architecture
-                </p>
+                
 
-                <p className="mt-1 hidden max-w-[180px] text-sm font-medium text-white/90 sm:block">
-                  Thoughtful spaces designed around people.
-                </p>
+               
 
               </div>
 

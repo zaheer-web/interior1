@@ -330,13 +330,9 @@ export default function About() {
 
             <div className="absolute bottom-5 left-5 right-5">
 
-              <p className="text-[10px] uppercase tracking-[0.3em] text-amber-400 sm:text-[11px]">
-                Featured Work
-              </p>
+             
 
-              <p className="mt-1 max-w-md text-lg font-semibold leading-tight sm:text-xl">
-                Modern residential masterpiece
-              </p>
+             
 
             </div>
 
@@ -359,9 +355,7 @@ export default function About() {
 
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
 
-            <div className="absolute bottom-3 left-3 rounded-full border border-white/10 bg-black/50 px-3 py-1 text-[9px] font-medium uppercase tracking-wider backdrop-blur-md sm:text-[11px]">
-              Studio
-            </div>
+           
 
           </div>
 
@@ -382,28 +376,13 @@ export default function About() {
 
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
 
-            <div className="absolute bottom-3 left-3 rounded-full border border-white/10 bg-black/50 px-3 py-1 text-[9px] font-medium uppercase tracking-wider backdrop-blur-md sm:text-[11px]">
-              Interior
-            </div>
+            
 
           </div>
 
           {/* ================= PROJECT BADGE ================= */}
 
-          <div className="project-badge absolute -bottom-6 -left-4 z-20 hidden rounded-2xl bg-gradient-to-br from-amber-300 to-amber-600 p-5 shadow-2xl shadow-amber-500/30 ring-1 ring-amber-200/60 sm:block">
-
-            <p className="text-3xl font-black text-black">
-              150+
-            </p>
-
-            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-black/70">
-              Projects
-              <br />
-              Delivered
-            </p>
-
-          </div>
-
+         
         </div>
 
       </div>
