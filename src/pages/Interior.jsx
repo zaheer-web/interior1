@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import { X, ChevronLeft, ChevronRight, ChevronDown, ChevronUp } from "lucide-react";
 
 // ============================================
 // IMAGES — path se import karo (URL nahi)
@@ -130,14 +130,21 @@ const images = [
  
 ];
 
+const INITIAL_VISIBLE = 9;
+
 const Interior = () => {
   const [category, setCategory] = useState("All");
   const [index, setIndex] = useState(null);
+  const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE);
 
   const filteredImages =
     category === "All"
       ? images
       : images.filter((img) => img.category === category);
+
+  const visibleImages = filteredImages.slice(0, visibleCount);
+  const hasMore = visibleCount < filteredImages.length;
+  const isExpanded = visibleCount > INITIAL_VISIBLE;
 
   const next = () => {
     setIndex((prev) => (prev + 1) % filteredImages.length);
@@ -178,6 +185,7 @@ const Interior = () => {
                     onClick={() => {
                       setCategory(item);
                       setIndex(null); // category change pe lightbox reset
+                      setVisibleCount(INITIAL_VISIBLE); // category change pe count reset
                     }}
                     className={`relative flex-shrink-0 snap-start px-5 py-2.5 rounded-full text-sm font-medium transition-colors duration-300
                     ${isActive ? "text-black" : "text-gray-300 hover:text-yellow-400"}`}
@@ -199,22 +207,53 @@ const Interior = () => {
 
         {/* GALLERY GRID */}
         {filteredImages.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            {filteredImages.map((item, i) => (
-              <motion.div
-                key={i}
-                whileHover={{ scale: 1.05 }}
-                onClick={() => setIndex(i)}
-                className="rounded-2xl overflow-hidden border border-white/10 bg-white/5 cursor-pointer group"
-              >
-                <img
-                  src={item.src}
-                  className="w-full h-[260px] object-cover group-hover:scale-110 transition duration-700"
-                  alt={item.category}
-                />
-              </motion.div>
-            ))}
-          </div>
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+              {visibleImages.map((item, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: (i % INITIAL_VISIBLE) * 0.04 }}
+                  whileHover={{ scale: 1.05 }}
+                  onClick={() => setIndex(i)}
+                  className="rounded-2xl overflow-hidden border border-white/10 bg-white/5 cursor-pointer group"
+                >
+                  <img
+                    src={item.src}
+                    className="w-full h-[260px] object-cover group-hover:scale-110 transition duration-700"
+                    alt={item.category}
+                  />
+                </motion.div>
+              ))}
+            </div>
+
+            {/* VIEW MORE / VIEW LESS */}
+            {filteredImages.length > INITIAL_VISIBLE && (
+              <div className="mt-14 flex justify-center">
+                <button
+                  onClick={() => {
+                    if (hasMore) {
+                      setVisibleCount(filteredImages.length);
+                    } else {
+                      setVisibleCount(INITIAL_VISIBLE);
+                      document
+                        .getElementById("interior-gallery-top")
+                        ?.scrollIntoView({ behavior: "smooth", block: "start" });
+                    }
+                  }}
+                  className="flex items-center gap-2 px-8 py-3 rounded-full border border-yellow-500/50 text-yellow-400 font-medium hover:bg-yellow-500 hover:text-black transition-colors duration-300"
+                >
+                  {hasMore ? "View More" : "View Less"}
+                  {hasMore ? (
+                    <ChevronDown size={18} />
+                  ) : (
+                    <ChevronUp size={18} />
+                  )}
+                </button>
+              </div>
+            )}
+          </>
         ) : (
           <p className="text-center text-gray-400">Is category me abhi koi image nahi hai.</p>
         )}
