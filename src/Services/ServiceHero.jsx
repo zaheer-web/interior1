@@ -3,9 +3,9 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Typewriter } from "react-simple-typewriter";
 
 // Local Images
-import hero1 from "../img/im5.png";
-import hero2 from "../img/im6.png";
-import hero3 from "../img/im7.png";
+import hero1 from "../img/im7.png";
+import hero2 from "../img/Landscape/na11.jpeg";
+import hero3 from "../img/3D Visualization/n25.jpeg";
 import hero4 from "../img/im8.png";
 
 const sliderImages = [hero1, hero2, hero3, hero4];
