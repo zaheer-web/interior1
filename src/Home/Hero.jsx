@@ -1,24 +1,70 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Typewriter } from "react-simple-typewriter";
 
+
+// Swap these for your own paths, e.g. "../img/Urban/n36.jpeg"
 import im1 from "../img/Urban/n36.jpeg";
 import im2 from "../img/3D Visualization/n34.jpeg";
 import im3 from "../img/architecture/n40.jpeg";
 import im4 from "../img//Landscape/na1.jpeg";
 
-const sliderImages = [im1, im2, im3, im4];
+const slides = [
+  { src: im1, label: "Urbanism", place: "Riverfront Quarter — Lisbon" },
+  { src: im2, label: "3D Visualization", place: "Casa Lumen — Interior Study" },
+  { src: im3, label: "Architecture", place: "Villa Terra — Andalusia" },
+  { src: im4, label: "Landscape", place: "Mirror Gardens — Kyoto" },
+];
+
+const words = [
+  "Landscape Design",
+  "Architecture",
+  "3D Visualization",
+  "Urbanism",
+  "Interior Design",
+];
+
+function useTypewriter(list) {
+  const [text, setText] = useState("");
+  const [wordIndex, setWordIndex] = useState(0);
+  const [deleting, setDeleting] = useState(false);
+
+  useEffect(() => {
+    const word = list[wordIndex % list.length] ?? "";
+    const done = !deleting && text === word;
+    const cleared = deleting && text === "";
+    const delay = done ? 1800 : cleared ? 200 : deleting ? 45 : 80;
+
+    const timer = setTimeout(() => {
+      if (done) return setDeleting(true);
+      if (cleared) {
+        setDeleting(false);
+        setWordIndex((i) => (i + 1) % list.length);
+        return;
+      }
+      setText(
+        deleting ? word.slice(0, text.length - 1) : word.slice(0, text.length + 1)
+      );
+    }, delay);
+
+    return () => clearTimeout(timer);
+  }, [text, deleting, wordIndex, list]);
+
+  return text;
+}
 
 const Hero = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [index, setIndex] = useState(0);
   const isFirstRender = useRef(true);
+  const typed = useTypewriter(words);
 
-  // ================= AUTO SLIDE =================
+  const go = useCallback((next) => {
+    setIndex((next + slides.length) % slides.length);
+  }, []);
+
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % sliderImages.length);
-    }, 5000);
-
+      setIndex((prev) => (prev + 1) % slides.length);
+    }, 6000);
     return () => clearInterval(timer);
   }, []);
 
@@ -26,269 +72,159 @@ const Hero = () => {
     isFirstRender.current = false;
   }, []);
 
-  const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % sliderImages.length);
-  };
-
-  const prevSlide = () => {
-    setCurrentIndex(
-      (prev) => (prev - 1 + sliderImages.length) % sliderImages.length
-    );
-  };
+  const active = slides[index] ?? slides[0];
 
   return (
-    <section className="relative h-screen min-h-[600px] w-full overflow-hidden bg-black">
-
-      {/* ================= FULL SCREEN SLIDER ================= */}
-
+    <section className="relative h-screen min-h-[640px] w-full overflow-hidden bg-neutral-950">
+      {/* ================= SLIDER ================= */}
       <div className="absolute inset-0">
         <AnimatePresence initial={false} mode="sync">
-
           <motion.div
-            key={currentIndex}
+            key={index}
             className="absolute inset-0 h-full w-full"
-
-            initial={{
-              opacity: 0,
-            }}
-
-            animate={{
-              opacity: 1,
-            }}
-
-            exit={{
-              opacity: 0,
-            }}
-
-            transition={{
-              duration: 1,
-              ease: "easeInOut",
-            }}
+            initial={{ opacity: 0, clipPath: "inset(0 0 100% 0)" }}
+            animate={{ opacity: 1, clipPath: "inset(0 0 0% 0)" }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.2, ease: [0.83, 0, 0.17, 1] }}
           >
-
-            {/* IMAGE */}
-
             <motion.img
-              src={sliderImages[currentIndex]}
-              alt={`Luxury interior ${currentIndex + 1}`}
+              src={active.src}
+              alt={`${active.label} project — ${active.place}`}
               draggable="false"
               className="absolute inset-0 h-full w-full select-none object-cover object-center"
-
-              initial={{
-                scale: isFirstRender.current ? 1 : 1.05,
-              }}
-
-              animate={{
-                scale: 1,
-              }}
-
-              transition={{
-                duration: 5,
-                ease: "linear",
-              }}
+              initial={{ scale: isFirstRender.current ? 1.02 : 1.08 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 7, ease: "linear" }}
             />
-
           </motion.div>
+        </AnimatePresence>      </div>
 
-        </AnimatePresence>
-      </div>
+      {/* ================= OVERLAYS ================= */}
+      <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-b from-neutral-950/85 via-neutral-950/50 to-neutral-950/70 md:bg-gradient-to-r md:from-neutral-950/90 md:via-neutral-950/55 md:to-transparent" />
+      <div className="pointer-events-none absolute inset-0 z-10 bg-[radial-gradient(120%_90%_at_50%_50%,transparent_35%,rgba(0,0,0,0.75)_100%)]" />
 
-      {/* ================= DARK OVERLAY ================= */}
-
-      <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-b from-black/75 via-black/45 to-black/40 md:bg-gradient-to-r md:from-black/85 md:via-black/45 md:to-transparent" />
-
-      {/* ================= HERO CONTENT ================= */}
-
-      <div className="absolute inset-0 z-20 flex items-center justify-center px-6 pt-20 sm:px-10 md:justify-start md:px-20 md:pt-0 lg:px-32">
-
-        <motion.div
-          key={`content-${currentIndex}`}
-
-          initial={{
-            x: -40,
-            opacity: 0,
-          }}
-
-          animate={{
-            x: 0,
-            opacity: 1,
-          }}
-
-          transition={{
-            duration: 0.8,
-            delay: 0.45,
-          }}
-
-          className="max-w-2xl text-center text-white md:text-left"
-        >
+      {/* ================= CONTENT ================= */}
+      <div className="absolute inset-0 z-20 flex items-center justify-center px-6 pt-24 sm:px-10 md:justify-start md:px-16 md:pt-20 lg:px-24">
+  <div className="max-w-3xl text-center md:text-left">
+         
 
           {/* HEADING */}
+          <h1 className="font-serif text-[clamp(2.75rem,8vw,6.5rem)] font-light leading-[0.95] tracking-[-0.02em] text-white text-center md:text-left">
+            <motion.span
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.25 }}
+              className="block"
+            >
+              Creative
+            </motion.span>
 
-          <h1 className="text-4xl font-extrabold leading-tight sm:text-5xl md:text-6xl lg:text-7xl">
-
-            Luxury{" "}
-
-            <span className="inline-block text-yellow-500">
-              <Typewriter
-                words={[
-                  "Interior Design",
-                  "Architecture",
-                  "Space Planning",
-                ]}
-                loop
-                cursor
-                cursorStyle="|"
-                typeSpeed={80}
-                deleteSpeed={50}
-                delaySpeed={1500}
-              />
+            <span className="block min-h-[1.05em] italic text-amber-400">
+              {typed}
+              <span className="ml-1 inline-block h-[0.82em] w-[2px] animate-pulse bg-amber-400 align-[-0.05em]" />
             </span>
 
-            <br />
-
-            Studio
-
+            <motion.span
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.4 }}
+              className="block font-medium"
+            >
+              Solutions
+            </motion.span>
           </h1>
 
           {/* PARAGRAPH */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.55 }}
+           className="mx-auto mt-8 max-w-xl text-base font-light leading-[1.85] tracking-wide text-neutral-300 sm:text-lg md:mx-0"
+          >
+            We shape architecture, interiors, landscapes and urban futures —
+            pairing immersive 3D visualization with a rigorous craft for spaces
+            that feel inevitable, sustainable and quietly timeless.
+          </motion.p>
 
-          <p className="mx-auto mt-6 max-w-lg text-base leading-relaxed text-gray-300 sm:text-lg md:mx-0">
-
-            We design modern interiors that blend elegance,
-            functionality and timeless aesthetics to create
-            inspiring spaces for living and working.
-
-          </p>
-
-        </motion.div>
-
+          {/* CTAs */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.7 }}
+            className="mt-10 flex flex-wrap items-center justify-center gap-4 md:justify-start"
+          >
+            <a
+              href="/gallery"
+              className="group inline-flex items-center gap-3 rounded-full bg-amber-400 px-7 py-3.5 text-xs uppercase tracking-[0.24em] text-neutral-950 transition-all duration-500 hover:bg-amber-300"
+            >
+              View Portfolio
+              <span className="transition-transform duration-500 group-hover:translate-x-1">
+                →
+              </span>
+            </a>
+            <a
+              href="/contact"
+              className="inline-flex items-center gap-3 rounded-full border border-white/25 px-7 py-3.5 text-xs uppercase tracking-[0.24em] text-white/80 backdrop-blur-md transition-colors duration-500 hover:border-amber-400 hover:text-amber-400"
+            >
+              Start a Project
+            </a>
+          </motion.div>
+        </div>
+      </div>
+ {/* ================= CAPTION ================= */}
+      <div className="absolute bottom-24 right-6 z-30 hidden text-right sm:block md:bottom-28 md:right-10  lg:right-24">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={`caption-${index}`}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.6 }}
+          >
+            <p className="text-[0.62rem] uppercase tracking-[0.4em] text-amber-400/90">
+              {active.label}
+            </p>
+            <p className="mt-1.5 font-serif text-lg italic text-white/70">
+              {active.place}
+            </p>
+          </motion.div>
+        </AnimatePresence>
       </div>
 
-      {/* ================= LEFT ARROW ================= */}
-
+      {/* ================= ARROWS ================= */}
       <button
         type="button"
-        onClick={prevSlide}
+        onClick={() => go(index - 1)}
         aria-label="Previous slide"
-        className="
-          absolute left-3 top-1/2 z-40
-          flex h-11 w-11
-          -translate-y-1/2
-          items-center justify-center
-          rounded-full
-          border border-white/30
-          bg-black/20
-          text-white
-          backdrop-blur-md
-          transition-all
-          hover:border-yellow-500
-          hover:bg-yellow-500
-          hover:text-black
-          sm:left-5
-          sm:h-12
-          sm:w-12
-          md:left-8
-        "
+        className="absolute left-3 top-1/2 z-40 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/25 bg-white/5 text-white backdrop-blur-md transition-all duration-500 hover:border-amber-400 hover:bg-amber-400 hover:text-neutral-950 sm:left-5 md:left-8"
       >
-
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.8"
-          className="h-5 w-5"
-        >
-          <path
-            d="M15 18l-6-6 6-6"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" className="h-5 w-5">
+          <path d="M15 18l-6-6 6-6" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
-
       </button>
-
-      {/* ================= RIGHT ARROW ================= */}
 
       <button
         type="button"
-        onClick={nextSlide}
+        onClick={() => go(index + 1)}
         aria-label="Next slide"
-        className="
-          absolute right-3 top-1/2 z-40
-          flex h-11 w-11
-          -translate-y-1/2
-          items-center justify-center
-          rounded-full
-          border border-white/30
-          bg-black/20
-          text-white
-          backdrop-blur-md
-          transition-all
-          hover:border-yellow-500
-          hover:bg-yellow-500
-          hover:text-black
-          sm:right-5
-          sm:h-12
-          sm:w-12
-          md:right-8
-        "
+        className="absolute right-3 top-1/2 z-40 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/25 bg-white/5 text-white backdrop-blur-md transition-all duration-500 hover:border-amber-400 hover:bg-amber-400 hover:text-neutral-950 sm:right-5 md:right-8"
       >
-
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.8"
-          className="h-5 w-5"
-        >
-          <path
-            d="M9 6l6 6-6 6"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" className="h-5 w-5">
+          <path d="M9 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
-
       </button>
 
-      {/* ================= DOTS ================= */}
-
-      <div className="absolute bottom-8 left-1/2 z-40 flex -translate-x-1/2 items-center gap-3">
-
-        {sliderImages.map((_, index) => (
-
-          <button
-            key={index}
-            type="button"
-            onClick={() => setCurrentIndex(index)}
-            aria-label={`Go to slide ${index + 1}`}
-
-            className={`h-2 rounded-full transition-all duration-500 ${
-              currentIndex === index
-                ? "w-10 bg-yellow-500"
-                : "w-2 bg-white/40 hover:bg-white/70"
-            }`}
-          />
-
-        ))}
-
-      </div>
-
-      {/* ================= SLIDE NUMBER ================= */}
-
-      <div className="absolute bottom-7 right-6 z-40 hidden items-center gap-2 text-white sm:flex md:right-10">
-
-        <span className="text-lg font-semibold">
-          {String(currentIndex + 1).padStart(2, "0")}
+     
+       {/* ================= COUNTER ================= */}
+      <div className="absolute bottom-9 right-6 z-40 hidden items-end gap-2 sm:flex md:right-10 lg:right-24">
+        <span className="font-serif text-3xl leading-none text-amber-400">
+          {String(index + 1).padStart(2, "0")}
         </span>
-
-        <span className="h-px w-8 bg-white/40" />
-
-        <span className="text-xs text-white/50">
-          {String(sliderImages.length).padStart(2, "0")}
+        <span className="mb-1.5 h-px w-8 bg-white/30" />
+        <span className="mb-1 text-[0.65rem] tracking-[0.3em] text-white/40">
+          {String(slides.length).padStart(2, "0")}
         </span>
-
       </div>
-
     </section>
   );
 };
