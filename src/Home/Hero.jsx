@@ -170,25 +170,7 @@ const Hero = () => {
           </motion.div>
         </div>
       </div>
- {/* ================= CAPTION ================= */}
-      <div className="absolute bottom-24 right-6 z-30 hidden text-right sm:block md:bottom-28 md:right-10  lg:right-24">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={`caption-${index}`}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.6 }}
-          >
-            <p className="text-[0.62rem] uppercase tracking-[0.4em] text-amber-400/90">
-              {active.label}
-            </p>
-            <p className="mt-1.5 font-serif text-lg italic text-white/70">
-              {active.place}
-            </p>
-          </motion.div>
-        </AnimatePresence>
-      </div>
+ 
 
       {/* ================= ARROWS ================= */}
       <button
