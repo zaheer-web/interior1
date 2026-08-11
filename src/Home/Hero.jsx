@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 
 // Swap these for your own paths, e.g. "../img/Urban/n36.jpeg"
@@ -153,21 +154,19 @@ const Hero = () => {
             transition={{ duration: 0.9, delay: 0.7 }}
             className="mt-10 flex flex-wrap items-center justify-center gap-4 md:justify-start"
           >
-            <a
-              href="/gallery"
-              className="group inline-flex items-center gap-3 rounded-full bg-amber-400 px-7 py-3.5 text-xs uppercase tracking-[0.24em] text-neutral-950 transition-all duration-500 hover:bg-amber-300"
-            >
-              View Portfolio
-              <span className="transition-transform duration-500 group-hover:translate-x-1">
-                →
-              </span>
-            </a>
-            <a
-              href="/contact"
-              className="inline-flex items-center gap-3 rounded-full border border-white/25 px-7 py-3.5 text-xs uppercase tracking-[0.24em] text-white/80 backdrop-blur-md transition-colors duration-500 hover:border-amber-400 hover:text-amber-400"
-            >
-              Start a Project
-            </a>
+           <Link
+  to="/gallery"
+  className="group inline-flex items-center gap-3 rounded-full bg-amber-400 px-7 py-3.5 text-xs uppercase tracking-[0.24em] text-neutral-950 transition-all duration-500 hover:bg-amber-300"
+>
+  View Portfolio
+  <span>→</span>
+</Link>
+           <Link
+  to="/contact"
+  className="inline-flex items-center gap-3 rounded-full border border-white/25 px-7 py-3.5 text-xs uppercase tracking-[0.24em] text-white/80 backdrop-blur-md transition-colors duration-500 hover:border-amber-400 hover:text-amber-400"
+>
+  Start a Project
+</Link>
           </motion.div>
         </div>
       </div>
