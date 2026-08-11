@@ -6,141 +6,99 @@ import { X, ChevronLeft, ChevronRight } from "lucide-react";
 // IMAGES — path se import karo (URL nahi)
 // ============================================
 
-// Kitchen
-import kitchen1 from "../img/Interior/ka1.jpeg";
-import kitchen2 from "../img/Interior/ka2.jpeg";
-import kitchen3 from "../img/Interior/ka3.jpeg";
-import kitchen4 from "../img/Interior/ka4.jpeg";
+// Landscape
+import Landscape1 from "../img/Landscape/na1.jpeg";
+import Landscape2 from "../img/Landscape/na2.jpeg";
+import Landscape3 from "../img/Landscape/na3.jpeg";
+import Landscape4 from "../img/Landscape/na4.jpeg";
+import Landscape5 from "../img/Landscape/na5.jpeg";
+import Landscape6 from "../img/Landscape/na6.jpeg";
+import Landscape7 from "../img/Landscape/na7.jpeg";
+import Landscape8 from "../img/Landscape/na8.jpeg";
 
-// Bedroom
-import bedroom1 from "../img/Interior/ba1.jpeg";
-import bedroom2 from "../img/Interior/ba2.jpeg";
-import bedroom3 from "../img/Interior/ba3.jpeg";
-import bedroom4 from "../img/Interior/ba4.jpeg";
-
-// Office
-import office1 from "../img/Interior/oo1.jpeg";
-import office2 from "../img/Interior/oo2.jpeg";
-import office3 from "../img/Interior/oo3.jpeg";
-import office4 from "../img/Interior/oo4.jpeg";
-
-// Dinning Room
-import dinning1 from "../img/Interior/oo4.jpeg";
-import dinning2 from "../img/Interior/oo4.jpeg";
+// Urban
+import Urban1 from "../img/Urban/n35.jpeg";
+import Urban2 from "../img/Urban/n36.jpeg";
+import Urban3 from "../img/Urban/n37.jpeg";
 
 
-// Kids Room
-import kids1 from "../img/Interior/ki1.jpeg";
-import kids2 from "../img/Interior/ki2.jpeg";
-import kids3 from "../img/Interior/ki3.jpeg";
-
-// Living Room
-import living1 from "../img/Interior/la1.jpeg";
-import living2 from "../img/Interior/la2.jpeg";
-import living3 from "../img/Interior/la3.jpeg";
-import living4 from "../img/Interior/la4.jpeg";
-import living5 from "../img/Interior/la5.jpeg";
-
-// Drawing Room
-import drawing1 from "../img/Interior/oo4.jpeg";
-import drawing2 from "../img/Interior/oo4.jpeg";
-import drawing3 from "../img/Interior/oo4.jpeg";
-import drawing4 from "../img/Interior/oo4.jpeg";
-
-// Double Height Living
-import doubleHeight1 from "../img/Interior/dh1.jpeg";
-import doubleHeight2 from "../img/Interior/dh2.jpeg";
-
-// Banquests Hall
-import banquet1 from "../img/Interior/bn1.jpeg";
-import banquet2 from "../img/Interior/bn2.jpeg";
 
 
-// Facade
-import facade1 from "../img/Interior/bu1.jpeg";
-import facade2 from "../img/Interior/bu2.jpeg";
 
-// Bathroom
-import bathroom1 from "../img/Interior/ba1.jpeg";
-import bathroom2 from "../img/Interior/ba2.jpeg";
-import bathroom3 from "../img/Interior/ba3.jpeg";
+
+
+// Architecture Room
+import Architecture1 from "../img/architecture/n38.jpeg";
+import Architecture2 from "../img/architecture/n39.jpeg";
+import Architecture3 from "../img/architecture/n40.jpeg";
+import Architecture4 from "../img/architecture/n41.jpeg";
+import Architecture5 from "../img/architecture/n44.jpeg";
+
+// 3D Visualisation Room
+import  Visualisation1 from "../img/3D Visualization/n24.jpeg";
+import  Visualisation2 from "../img/3D Visualization/n25.jpeg";
+import  Visualisation3 from "../img/3D Visualization/n31.jpeg";
+import  Visualisation4 from "../img/3D Visualization/n34.jpeg";
+
+
+
+// Interior
+import Interior from "../img/Interior/ba1.jpeg";
+import Interior2 from "../img/Interior/ba2.jpeg";
+import Interior3 from "../img/Interior/ba3.jpeg";
 
 const categories = [
   "All",
-  "Kitchen",
-  "Bedroom",
-  "Office",
-  "Dinning Room",
-  "Kids Room",
-  "Living Room",
-  "Drawing Room",
-  "Double Height Living",
-  "Banquests Hall",
-  "Facade",
-  "Bathroom",
+  "Landscape",
+  "Architecture",
+  "3D Visualisation",
+  "Urbanism",
+  "Interior",
+
 ];
 
 // Har category ke liye images yaha map ki gayi hain.
 // Category name EXACT match hona chahiye upar wali list se.
 const images = [
-  // Kitchen
-  { src: kitchen1, category: "Kitchen" },
-  { src: kitchen2, category: "Kitchen" },
-  { src: kitchen3, category: "Kitchen" },
-  { src: kitchen4, category: "Kitchen" },
+  // Landscape
+  { src: Landscape1, category: "Landscape" },
+  { src: Landscape2, category: "Landscape" },
+  { src: Landscape3, category: "Landscape" },
+  { src: Landscape4, category: "Landscape" },
+    { src: Landscape5, category: "Landscape" },
+  { src: Landscape6, category: "Landscape" },
+  { src: Landscape7, category: "Landscape" },
+  { src: Landscape8, category: "Landscape" },
 
-  // Bedroom
-  { src: bedroom1, category: "Bedroom" },
-  { src: bedroom2, category: "Bedroom" },
-  { src: bedroom3, category: "Bedroom" },
-  { src: bedroom4, category: "Bedroom" },
+  // Urban
+  { src: Urban1, category: "Urbanism" },
+  { src: Urban2, category: "Urbanism" },
+  { src: Urban3, category: "Urbanism" },
+  
 
-  // Office
-  { src: office1, category: "Office" },
-  { src: office2, category: "Office" },
-  { src: office3, category: "Office" },
-  { src: office4, category: "Office" },
-
-  // Dinning Room
-  { src: dinning1, category: "Dinning Room" },
-  { src: dinning2, category: "Dinning Room" },
+  
  
 
-  // Kids Room
-  { src: kids1, category: "Kids Room" },
-  { src: kids2, category: "Kids Room" },
-  { src: kids3, category: "Kids Room" },
 
-  // Living Room
-  { src: living1, category: "Living Room" },
-  { src: living2, category: "Living Room" },
-  { src: living3, category: "Living Room" },
-  { src: living4, category: "Living Room" },
-  { src: living5, category: "Living Room" },
+  // Architecture Room
+  { src: Architecture1, category: "Architecture" },
+  { src: Architecture2, category: "Architecture" },
+  { src: Architecture3, category: "Architecture" },
+  { src: Architecture4, category: "Architecture" },
+  { src: Architecture5, category: "Architecture" },
 
-  // Drawing Room
-  { src: drawing1, category: "Drawing Room" },
-  { src: drawing2, category: "Drawing Room" },
-  { src: drawing3, category: "Drawing Room" },
-  { src: drawing4, category: "Drawing Room" },
+  // 3D Visualisation Room
+  { src: Visualisation1, category: "3D Visualisation" },
+  { src: Visualisation2, category: "3D Visualisation" },
+  { src: Visualisation3, category: "3D Visualisation" },
+  { src: Visualisation4, category: "3D Visualisation" },
 
-  // Double Height Living
-  { src: doubleHeight1, category: "Double Height Living" },
-  { src: doubleHeight2, category: "Double Height Living" },
+ 
 
-  // Banquests Hall
-  { src: banquet1, category: "Banquests Hall" },
-  { src: banquet2, category: "Banquests Hall" },
-
-
-  // Facade
-  { src: facade1, category: "Facade" },
-  { src: facade2, category: "Facade" },
-
-  // Bathroom
-  { src: bathroom1, category: "Bathroom" },
-  { src: bathroom2, category: "Bathroom" },
-  { src: bathroom3, category: "Bathroom" },
+  // Interior
+  { src: Interior, category: "Interior" },
+  { src: Interior2, category: "Interior" },
+  { src: Interior3, category: "Interior" },
 ];
 
 const GallerySection = () => {
