@@ -5,47 +5,36 @@ import { Link } from "react-router-dom";
 
 // Yaha apni images import karo (path apne folder structure ke hisab se adjust karo)
 import im1 from "../img/im1.png";
-import im2 from "../img/im2.png";
-import im3 from "../img/im3.png";
-import im4 from "../img/im4.png";
-import im5 from "../img/im5.png";
-import im6 from "../img/im6.png";
+import im2 from "../img/3D Visualization/n34.jpeg";
+import im3 from "../img/Landscape/na13.jpeg";
+import im4 from "../img/Urban/n36.jpeg";
+import im5 from "../img/architecture/n44.jpeg";
+import im6 from "../img/new/n33.jpeg";
 
 const projects = [
 {
-title:"Luxury Villa",
-location:"Moradabad",
-desc:"A modern luxury residence designed with elegant architecture.",
+
+
 img:im1
 },
 {
-title:"Urban Commercial Complex",
-location:"Delhi",
-desc:"A commercial complex focusing on modern architecture and functionality.",
+
 img:im2
 },
 {
-title:"Modern Interior Residence",
-location:"Noida",
-desc:"A contemporary interior design project with modern aesthetics.",
+
 img:im3
 },
 {
-title:"Landscape Design Project",
-location:"Moradabad",
-desc:"A beautiful landscape design enhancing outdoor spaces.",
+
 img:im4
 },
 {
-title:"Urban Planning Project",
-location:"Lucknow",
-desc:"Urban design project focused on sustainable community spaces.",
+
 img:im5
 },
 {
-title:"Luxury Resort Architecture",
-location:"Uttarakhand",
-desc:"A resort project designed with modern architecture and nature.",
+
 img:im6
 }
 ];
@@ -83,13 +72,8 @@ className="relative text-center max-w-3xl px-6"
 Featured Project
 </p>
 
-<h1 className="text-5xl md:text-6xl font-bold mb-4">
-{projects[0].title}
-</h1>
 
-<p className="text-gray-300 mb-6">
-{projects[0].desc}
-</p>
+
 
 <button
 onClick={()=>setIndex(0)}

@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
 // Yaha apni image import karo (path apne folder structure ke hisab se adjust karo)
-import im1 from "../img/im20.jpeg";
+import im1 from "../img/architecture/n39.jpeg";
 
 const ServiceShowcase = () => {
   return (

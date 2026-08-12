@@ -5,9 +5,9 @@ import { Md3dRotation } from "react-icons/md"
 
 // Yaha apni images import karo (path apne folder structure ke hisab se adjust karo)
 import im1 from "../img/im19.jpeg"
-import im2 from "../img/im10.png"
-import im3 from "../img/im8.png"
-import im4 from "../img/im4.png"
+import im2 from "../img/3D Visualization/n25.jpeg"
+import im3 from "../img/Landscape/na4.jpeg"
+import im4 from "../img/Urban/n35.jpeg"
 
 const services = [
 {
