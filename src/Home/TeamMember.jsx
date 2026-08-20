@@ -4,9 +4,8 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 // Replace these with your actual project imports
-// import shahzebImg from "../img/team/is.jpeg";
+import abuZainImg from "../img/team/ad.jpeg";
 import aslamImg from "../img/team/as.png";
-
 import ishaImg from "../img/team/is.jpeg";
 import nawazishImg from "../img/team/nw.jpeg";
 
@@ -20,7 +19,7 @@ const teamMembers = [
     role: "Principal Architect",
     image: aslamImg,
     description:
-      "Principal Architect at Studio Athenaeum, bringing over 7 years of diverse experience in Architecture and Urbanism. Leading the team since 2016, he has spearheaded projects ranging from urban spaces to interiors. Thesis topper in Urban Regeneration from Jamia Millia Islamia, New Delhi, and a graduate with honors from MET Faculty of Architecture, AKTU.",
+      "Principal Architect at Studio Athenaeum with 7+ years in Architecture and Urbanism. Leading the team since 2016 across urban spaces and interiors. Thesis topper in Urban Regeneration, Jamia Millia Islamia.",
     skills: [
       "Architecture",
       "Urbanism",
@@ -30,31 +29,30 @@ const teamMembers = [
       "Project Leadership",
     ],
   },
-  // {
-  //   id: 2,
-  //   code: "AR·02",
-  //   name: "Mohammad Shahzeb",
-  //   role: "Associate Partner",
-  //   image: shahzebImg,
-  //   description:
-  //     "Associate Partner at Studio Athenaeum, holding a B.Arch degree with over 2 years of professional experience. Has worked on diverse large-scale projects such as stadiums, medical colleges, hospitals, and educational institutions.",
-  //   skills: [
-  //     "Architecture",
-  //     "Large-Scale Projects",
-  //     "Project Design",
-  //     "Planning",
-  //   ],
-  // },
- 
- 
+  {
+    id: 2,
+    code: "SE·02",
+    name: "Abu Zain",
+    role: "Structural Engineer",
+    image: abuZainImg,
+    description:
+      "Qualified Structural Engineer with 6+ years in structural design, analysis, detailing, and engineering consultancy. Graduate of AKTU, associated with M.A. Architects & Associates for 5+ years across residential, commercial, and institutional projects — ensuring structural safety, stability, and close coordination between architectural and structural requirements.",
+    skills: [
+      "Structural Design",
+      "Structural Analysis",
+      "Detailing",
+      "Engineering Consultancy",
+      "Construction Practices",
+    ],
+  },
   {
     id: 4,
-    code: "ID·02",
+    code: "ID·03",
     name: "Isha Verma",
     role: "Interior Designer",
     image: ishaImg,
     description:
-      "An interior designer with a passion for transforming spatial concepts into functional and aesthetically compelling environments. Works across residential, commercial, and diverse architectural projects, balancing modern elegance with everyday practicality.",
+      "Interior designer turning spatial concepts into functional, compelling environments. Works across residential and commercial projects, balancing modern elegance with everyday practicality.",
     skills: [
       "Interior Design",
       "Technical Drafting",
@@ -64,12 +62,12 @@ const teamMembers = [
   },
   {
     id: 5,
-    code: "AR·03",
+    code: "AR·04",
     name: "Mohd Nawazish Ali",
     role: "Architectural Designer",
     image: nawazishImg,
     description:
-      "B.Arch graduate from MET Faculty of Architecture, class of 2025. Professional experience in architectural design, drafting, 3D visualization, and site coordination, combining design thinking with strong technical skills.",
+      "B.Arch graduate, MET Faculty of Architecture, class of 2025. Experience in architectural design, drafting, and 3D visualization, blending design thinking with strong technical skills.",
     skills: [
       "Architectural Design",
       "Drafting",
