@@ -28,6 +28,7 @@ import Visualization from "./pages/Visualization";
 import Landscape from "./pages/Landscape";
 import Urban from "./pages/Urban";
 import ProjectManagment from "./pages/ProjectManagment";
+import TeamDashboard from "./pages/Teamdashboard";
 
 
 function App() {
@@ -64,7 +65,7 @@ function App() {
         <Route path="/gallery-grid" element={<GallerySection />} />
 
         {/* ADMIN */}
-        <Route path="/admin" element={<Dashboard />} />
+        <Route path="/admin" element={<TeamDashboard/>} />
 
       </Routes>
 

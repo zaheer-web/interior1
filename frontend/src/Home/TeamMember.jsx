@@ -3,97 +3,55 @@ import { ArrowUpRight } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-// Replace these with your actual project imports
-import abuZainImg from "../img/team/ad.jpeg";
-import aslamImg from "../img/team/as.png";
-import ishaImg from "../img/team/is.jpeg";
-import nawazishImg from "../img/team/nw.jpeg";
-
 gsap.registerPlugin(ScrollTrigger);
 
-const teamMembers = [
-    {
-    id: 1,
-    code: "AR·01",
-    name: "Mohd Aslam",
-    role: "Principal Architect",
-    image: aslamImg,
-    description:
-      "With over a decade of experience in architecture, design, and urban planning, Mohd Aslam is the Principal Architect at M.A. Architects & Associates — a multidisciplinary practice committed to creating thoughtful, functional, and timeless spaces. A postgraduate in Architecture (Urban Regeneration), his approach blends contemporary aesthetics, contextual planning, technical precision, and practical functionality across residential, commercial, institutional, hospitality, and healthcare projects. His philosophy: good design should never be limited by budget or scale — every project deserves thoughtful planning, refined detailing, and solutions that reflect the aspirations of its users.",
-    skills: [
-      "Architecture",
-      "Urban Regeneration",
-      "Urban Planning",
-      "Contextual Design",
-      "Residential & Commercial",
-      "Institutional Design",
-      "Hospitality & Healthcare",
-      "Project Leadership",
-    ],
-  },
-  {
-    id: 2,
-    code: "SE·02",
-    name: "Abu Zain",
-    role: "Structural Engineer",
-    image: abuZainImg,
-    description:
-      "Qualified Structural Engineer with 6+ years in structural design, analysis, detailing, and engineering consultancy. Graduate of AKTU, associated with M.A. Architects & Associates for 5+ years across residential, commercial, and institutional projects — ensuring structural safety, stability, and close coordination between architectural and structural requirements.",
-    skills: [
-      "Structural Design",
-      "Structural Analysis",
-      "Detailing",
-      "Engineering Consultancy",
-      "Construction Practices",
-    ],
-  },
-  {
-    id: 4,
-    code: "ID·03",
-    name: "Isha Verma",
-    role: "Interior Designer",
-    image: ishaImg,
-    description:
-      "Interior designer turning spatial concepts into functional, compelling environments. Works across residential and commercial projects, balancing modern elegance with everyday practicality.",
-    skills: [
-      "Interior Design",
-      "Technical Drafting",
-      "3D Visualization",
-      "Site Coordination",
-    ],
-  },
-  {
-    id: 5,
-    code: "AR·04",
-    name: "Mohd Nawazish Ali",
-    role: "Architectural Designer",
-    image: nawazishImg,
-    description:
-      "B.Arch graduate, MET Faculty of Architecture, class of 2025. Experience in architectural design, drafting, and 3D visualization, blending design thinking with strong technical skills.",
-    skills: [
-      "Architectural Design",
-      "Drafting",
-      "3D Visualization",
-      "Site Coordination",
-      "AutoCAD",
-      "Revit",
-      "SketchUp",
-      "Lumion",
-      "V-Ray",
-      "Photoshop",
-    ],
-  },
-];
+// Point this at your backend, e.g. via an env var:
+// VITE_API_URL=http://localhost:5000/api  (Vite)
+// REACT_APP_API_URL=http://localhost:5000/api  (CRA)
+const API_URL =
+  import.meta?.env?.VITE_API_URL || "http://localhost:5000/api";
 
 export default function TeamSection() {
   const sectionRef = useRef(null);
   const [flipped, setFlipped] = useState({});
+  const [teamMembers, setTeamMembers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const toggleFlip = (id) => {
     setFlipped((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
+  // fetch team members from the backend
   useEffect(() => {
+    const controller = new AbortController();
+
+    const fetchTeam = async () => {
+      try {
+        setLoading(true);
+        const res = await fetch(`${API_URL}/team`, { signal: controller.signal });
+        if (!res.ok) throw new Error(`Request failed with status ${res.status}`);
+        const data = await res.json();
+        setTeamMembers(data);
+        setError(null);
+      } catch (err) {
+        if (err.name !== "AbortError") {
+          console.error("Failed to load team members:", err);
+          setError("Couldn't load the team right now. Please try again later.");
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTeam();
+    return () => controller.abort();
+  }, []);
+
+  // scroll animations — re-run once real data has rendered cards
+  useEffect(() => {
+    if (loading || teamMembers.length === 0) return;
+
     const ctx = gsap.context(() => {
       gsap.from(".team-header-reveal", {
         scrollTrigger: { trigger: sectionRef.current, start: "top 80%" },
@@ -115,7 +73,7 @@ export default function TeamSection() {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [loading, teamMembers]);
 
   return (
     <section
@@ -219,157 +177,172 @@ export default function TeamSection() {
             </p>
           </div>
 
+          {/* LOADING STATE */}
+          {loading && (
+            <div className="mt-16 text-center sa-mono text-sm" style={{ color: "rgba(20,23,31,0.5)" }}>
+              Loading team…
+            </div>
+          )}
+
+          {/* ERROR STATE */}
+          {!loading && error && (
+            <div className="mt-16 text-center sa-mono text-sm" style={{ color: "#b3452c" }}>
+              {error}
+            </div>
+          )}
+
+          {/* EMPTY STATE */}
+          {!loading && !error && teamMembers.length === 0 && (
+            <div className="mt-16 text-center sa-mono text-sm" style={{ color: "rgba(20,23,31,0.5)" }}>
+              No team members to show yet.
+            </div>
+          )}
+
           {/* GRID */}
-          <div className="team-grid mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-7 lg:mt-16 lg:grid-cols-3 lg:gap-7">
-            {teamMembers.map((member) => {
-              const isFlipped = !!flipped[member.id];
-              return (
-                <div
-                  key={member.id}
-                  className={`team-card flip-card h-[420px] cursor-pointer sm:h-[440px] ${
-                    isFlipped ? "is-flipped" : ""
-                  }`}
-                  onClick={() => toggleFlip(member.id)}
-                >
-                  <div className="flip-card-inner">
-                    {/* FRONT — image only */}
-                    <div
-                      className="flip-card-face flip-card-front overflow-hidden rounded-2xl border shadow-xl"
-                      style={{
-                        borderColor: "var(--sa-line)",
-                        boxShadow: "0 20px 40px rgba(20,23,31,0.18)",
-                      }}
-                    >
-                      <img
-                        src={member.image}
-                        alt={member.name}
-                        loading="lazy"
-                        className="h-full w-full object-cover grayscale-[10%]"
-                      />
+          {!loading && !error && teamMembers.length > 0 && (
+            <div className="team-grid mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-7 lg:mt-16 lg:grid-cols-3 lg:gap-7">
+              {teamMembers.map((member) => {
+                const isFlipped = !!flipped[member.id];
+                return (
+                  <div
+                    key={member.id}
+                    className={`team-card flip-card h-[420px] cursor-pointer sm:h-[440px] ${
+                      isFlipped ? "is-flipped" : ""
+                    }`}
+                    onClick={() => toggleFlip(member.id)}
+                  >
+                    <div className="flip-card-inner">
+                      {/* FRONT — image only */}
                       <div
-                        className="absolute inset-0"
+                        className="flip-card-face flip-card-front overflow-hidden rounded-2xl border shadow-xl"
                         style={{
-                          background:
-                            "linear-gradient(to top, rgba(20,23,31,0.85) 0%, rgba(20,23,31,0.05) 45%, transparent 65%)",
-                        }}
-                      />
-
-                      {/* index tag */}
-                      <div
-                        className="sa-mono absolute left-4 top-4 rounded-full px-3 py-1 text-[10px] tracking-[0.15em]"
-                        style={{
-                          background: "rgba(20,23,31,0.55)",
-                          color: "var(--sa-brass-light)",
-                          backdropFilter: "blur(4px)",
+                          borderColor: "var(--sa-line)",
+                          boxShadow: "0 20px 40px rgba(20,23,31,0.18)",
                         }}
                       >
-                        {member.code}
-                      </div>
-
-                      {/* name plate */}
-                      <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6">
-                        <div
-                          className="mb-2 h-px w-10"
-                          style={{ background: "var(--sa-brass-light)" }}
+                        <img
+                          src={member.image}
+                          alt={member.name}
+                          loading="lazy"
+                          className="h-full w-full object-cover grayscale-[10%]"
                         />
-                        <h3 className="sa-serif text-xl font-bold text-white sm:text-2xl">
-                          {member.name}
-                        </h3>
-                        <p
-                          className="sa-mono mt-1 text-[10px] uppercase tracking-[0.18em]"
-                          style={{ color: "var(--sa-brass-light)" }}
+                        <div
+                          className="absolute inset-0"
+                          style={{
+                            background:
+                              "linear-gradient(to top, rgba(20,23,31,0.85) 0%, rgba(20,23,31,0.05) 45%, transparent 65%)",
+                          }}
+                        />
+
+                        {/* index tag */}
+                        <div
+                          className="sa-mono absolute left-4 top-4 rounded-full px-3 py-1 text-[10px] tracking-[0.15em]"
+                          style={{
+                            background: "rgba(20,23,31,0.55)",
+                            color: "var(--sa-brass-light)",
+                            backdropFilter: "blur(4px)",
+                          }}
                         >
-                          {member.role}
-                        </p>
-                      </div>
+                          {member.code}
+                        </div>
 
-                      <div
-                        className="sa-mono absolute right-4 top-4 flex items-center gap-1 rounded-full px-2.5 py-1 text-[9px] uppercase tracking-[0.15em]"
-                        style={{
-                          background: "rgba(20,23,31,0.55)",
-                          color: "rgba(255,255,255,0.75)",
-                        }}
-                      >
-                        View <ArrowUpRight size={10} />
-                      </div>
-                    </div>
-
-                    {/* BACK — full profile */}
-                    <div
-                      className="flip-card-face flip-card-back flex flex-col overflow-hidden rounded-2xl border p-5 sm:p-6"
-                      style={{
-                        background: "var(--sa-ink)",
-                        borderColor: "var(--sa-brass)",
-                      }}
-                    >
-                      {/* crop marks */}
-                      <span
-                        className="crop-tick left-3 top-3 border-l-2 border-t-2"
-                      />
-                      <span
-                        className="crop-tick right-3 top-3 border-r-2 border-t-2"
-                      />
-                      <span
-                        className="crop-tick bottom-3 left-3 border-b-2 border-l-2"
-                      />
-                      <span
-                        className="crop-tick bottom-3 right-3 border-b-2 border-r-2"
-                      />
-
-                      <div className="flex items-start justify-between gap-3">
-                        <div>
-                          <h3 className="sa-serif text-lg font-bold text-white sm:text-xl">
+                        {/* name plate */}
+                        <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6">
+                          <div
+                            className="mb-2 h-px w-10"
+                            style={{ background: "var(--sa-brass-light)" }}
+                          />
+                          <h3 className="sa-serif text-xl font-bold text-white sm:text-2xl">
                             {member.name}
                           </h3>
                           <p
-                            className="sa-mono mt-1 text-[10px] uppercase tracking-[0.15em]"
+                            className="sa-mono mt-1 text-[10px] uppercase tracking-[0.18em]"
                             style={{ color: "var(--sa-brass-light)" }}
                           >
                             {member.role}
                           </p>
                         </div>
-                        <span
-                          className="sa-mono shrink-0 text-[10px] tracking-[0.15em]"
-                          style={{ color: "var(--sa-brass)" }}
+
+                        <div
+                          className="sa-mono absolute right-4 top-4 flex items-center gap-1 rounded-full px-2.5 py-1 text-[9px] uppercase tracking-[0.15em]"
+                          style={{
+                            background: "rgba(20,23,31,0.55)",
+                            color: "rgba(255,255,255,0.75)",
+                          }}
                         >
-                          {member.code}
-                        </span>
+                          View <ArrowUpRight size={10} />
+                        </div>
                       </div>
 
+                      {/* BACK — full profile */}
                       <div
-                        className="my-4 h-px w-full"
-                        style={{ background: "var(--sa-brass)" }}
-                      />
+                        className="flip-card-face flip-card-back flex flex-col overflow-hidden rounded-2xl border p-5 sm:p-6"
+                        style={{
+                          background: "var(--sa-ink)",
+                          borderColor: "var(--sa-brass)",
+                        }}
+                      >
+                        {/* crop marks */}
+                        <span className="crop-tick left-3 top-3 border-l-2 border-t-2" />
+                        <span className="crop-tick right-3 top-3 border-r-2 border-t-2" />
+                        <span className="crop-tick bottom-3 left-3 border-b-2 border-l-2" />
+                        <span className="crop-tick bottom-3 right-3 border-b-2 border-r-2" />
 
-                      <p className="flex-1 overflow-y-auto text-[13px] leading-relaxed text-neutral-300 sm:text-sm">
-                        {member.description}
-                      </p>
-
-                      <div className="mt-4">
-                        <p
-                          className="sa-mono mb-2 text-[9px] uppercase tracking-[0.2em]"
-                          style={{ color: "var(--sa-brass)" }}
-                        >
-                          Expertise
-                        </p>
-                        <div className="flex flex-wrap gap-1.5">
-                          {member.skills.map((skill) => (
-                            <span
-                              key={skill}
-                              className="sa-mono rounded-full border px-2 py-0.5 text-[9px] tracking-wide text-neutral-300"
-                              style={{ borderColor: "rgba(217,189,138,0.35)" }}
+                        <div className="flex items-start justify-between gap-3">
+                          <div>
+                            <h3 className="sa-serif text-lg font-bold text-white sm:text-xl">
+                              {member.name}
+                            </h3>
+                            <p
+                              className="sa-mono mt-1 text-[10px] uppercase tracking-[0.15em]"
+                              style={{ color: "var(--sa-brass-light)" }}
                             >
-                              {skill}
-                            </span>
-                          ))}
+                              {member.role}
+                            </p>
+                          </div>
+                          <span
+                            className="sa-mono shrink-0 text-[10px] tracking-[0.15em]"
+                            style={{ color: "var(--sa-brass)" }}
+                          >
+                            {member.code}
+                          </span>
+                        </div>
+
+                        <div
+                          className="my-4 h-px w-full"
+                          style={{ background: "var(--sa-brass)" }}
+                        />
+
+                        <p className="flex-1 overflow-y-auto text-[13px] leading-relaxed text-neutral-300 sm:text-sm">
+                          {member.description}
+                        </p>
+
+                        <div className="mt-4">
+                          <p
+                            className="sa-mono mb-2 text-[9px] uppercase tracking-[0.2em]"
+                            style={{ color: "var(--sa-brass)" }}
+                          >
+                            Expertise
+                          </p>
+                          <div className="flex flex-wrap gap-1.5">
+                            {member.skills.map((skill) => (
+                              <span
+                                key={skill}
+                                className="sa-mono rounded-full border px-2 py-0.5 text-[9px] tracking-wide text-neutral-300"
+                                style={{ borderColor: "rgba(217,189,138,0.35)" }}
+                              >
+                                {skill}
+                              </span>
+                            ))}
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
+          )}
         </div>
       </div>
     </section>
